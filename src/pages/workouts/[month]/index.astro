@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { getUrl } from "@/utils/url";
 
 interface Props {
   month: string;
@@ -85,7 +86,7 @@ const breadcrumbs = [
     <div class="max-w-5xl mx-auto px-4 lg:px-8 flex justify-between items-center">
       {prevMonth ? (
         <a 
-          href={`/workouts/${prevMonth.slug}`} 
+          href={getUrl(`workouts/${prevMonth.slug}`)} 
           class="flex items-center gap-2 text-sm hover:text-primary transition-colors"
         >
           ← {prevMonth.slug}
@@ -96,7 +97,7 @@ const breadcrumbs = [
       
       {nextMonth ? (
         <a 
-          href={`/workouts/${nextMonth.slug}`}
+          href={getUrl(`workouts/${nextMonth.slug}`)}
           class="flex items-center gap-2 text-sm hover:text-primary transition-colors"
         >
           {nextMonth.slug} →
@@ -140,7 +141,7 @@ const breadcrumbs = [
             
             return (
               <a 
-                href={`/workouts/${monthSlug}/day${dayNumber}`}
+                href={getUrl(`workouts/${monthSlug}/day${dayNumber}`)}
                 class="group block bg-base-100 rounded-xl border border-base-300 overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300"
               >
                 <div class="p-6">

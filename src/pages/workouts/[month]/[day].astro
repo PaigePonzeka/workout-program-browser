@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { getUrl } from "@/utils/url";
 
 export async function getStaticPaths() {
   const allWorkouts = await getCollection("workouts");
@@ -111,7 +112,7 @@ const breadcrumbs = [
     <header class="mb-8">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <a href={monthHref} class="inline-flex items-center text-sm text-primary hover:underline mb-2">
+          <a href={getUrl(monthHref)} class="inline-flex items-center text-sm text-primary hover:underline mb-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
@@ -132,7 +133,7 @@ const breadcrumbs = [
         <div class="flex justify-between items-center">
           {prevDay ? (
             <a 
-              href={`/workouts/${monthSlug}/day${prevDay.id.match(/day(\d+)\.md$/)?.[1] || ''}`}
+              href={getUrl(`workouts/${monthSlug}/day${prevDay.id.match(/day(\d+)\.md$/)?.[1] || ''}`)}
               class="btn btn-ghost btn-sm"
             >
               ← Previous
@@ -141,7 +142,7 @@ const breadcrumbs = [
           
           {nextDay && (
             <a 
-              href={`/workouts/${monthSlug}/day${nextDay.id.match(/day(\d+)\.md$/)?.[1] || ''}`}
+              href={getUrl(`workouts/${monthSlug}/day${nextDay.id.match(/day(\d+)\.md$/)?.[1] || ''}`)}
               class="btn btn-ghost btn-sm"
             >
               Next →
@@ -168,7 +169,7 @@ const breadcrumbs = [
               const dayNum = day.id.match(/day(\d+)\.md$/)?.[1] || '0';
               return (
                 <a 
-                  href={`/workouts/${monthSlug}/day${dayNum}`}
+                  href={getUrl(`workouts/${monthSlug}/day${dayNum}`)}
                   class="block p-4 rounded-lg border border-base-300 hover:border-primary/50 hover:shadow transition-all"
                 >
                   <h3 class="font-medium">{day.data.title || `Day ${dayNum}`}</h3>
