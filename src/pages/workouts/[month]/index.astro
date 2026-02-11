@@ -1,0 +1,164 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { parseMarkdownTable } from "@astrojs/markdown-remark";
+
+export async function getStaticPaths() {
+  const allWorkouts = await getCollection("workouts");
+  
+  // Get all month entries (now all entries are treated as months)
+  const monthEntries = allWorkouts.map(entry => {
+    // Extract the month slug from the file path
+    // Handle both '2026-02/index.md' and 'workouts/2026-02/index.md' formats
+    const parts = entry.id.split('/');
+    const slug = parts[0] === 'workouts' ? parts[1] : parts[0];
+    
+    return {
+      params: { month: slug },
+      props: { 
+        monthSlug: slug,
+        entryId: entry.id
+      }
+    };
+  });
+
+  return monthEntries;
+}
+
+const { monthSlug, entryId } = Astro.props;
+const allWorkouts = await getCollection("workouts");
+
+// Find the month entry by its exact ID
+const monthEntry = allWorkouts.find(entry => entry.id === entryId);
+
+if (!monthEntry) {
+  console.error(`Month not found for slug: ${monthSlug}. Available months:`, 
+    allWorkouts.map(entry => entry.id)
+  );
+  return Astro.redirect("/404");
+}
+
+// Calculate previous and next month for navigation
+const allMonths = [...allWorkouts].sort((a, b) => a.id.localeCompare(b.id));
+
+const currentMonthIndex = allMonths.findIndex(entry => entry.id === entryId);
+const prevMonth = currentMonthIndex > 0 ? allMonths[currentMonthIndex - 1] : null;
+const nextMonth = currentMonthIndex < allMonths.length - 1 ? allMonths[currentMonthIndex + 1] : null;
+
+// Get day entries for this month (files named day1.md, day2.md, etc.)
+const days = allWorkouts
+  .filter(entry => {
+    // Match files like "2026-03/day1.md" or "workouts/2026-03/day1.md"
+    const dayPattern = new RegExp(`(^|/)${monthSlug}/day(\d+)\.md$`);
+    return dayPattern.test(entry.id);
+  })
+  .sort((a, b) => {
+    // Extract day numbers for sorting
+    const getDayNumber = (id) => {
+      const match = id.match(/day(\d+)\.md$/);
+      return match ? parseInt(match[1], 10) : 0;
+    };
+    return getDayNumber(a.id) - getDayNumber(b.id);
+  });
+
+console.log(`Found month: ${monthSlug} with ${days.length} day files`);
+
+// Render month content
+const { Content } = await monthEntry.render();
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: monthSlug },
+];
+
+// Simplified badge styling since we don't have phase in the schema anymore
+const badgeClass = "badge-neutral";
+---
+
+<BaseLayout
+  title={monthEntry.data.title}
+  description={monthEntry.data.goal || "Monthly workout programming"}
+  breadcrumbs={breadcrumbs}
+>
+
+  <!-- ─── Month Header ─── -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-secondary/5 via-base-100 to-primary/5"></div>
+    <div class="relative max-w-5xl mx-auto px-4 lg:px-8 py-10 sm:py-14">
+      <div class="flex flex-wrap items-center gap-2 mb-4">
+        <span class="badge badge-outline">{monthSlug}</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight" style="font-family: 'Outfit', sans-serif;">
+        {monthEntry.data.title}
+      </h1>
+
+      {monthEntry.data.goal && (
+        <p class="text-base text-base-content/60 mt-3 max-w-2xl leading-relaxed">
+          {monthEntry.data.goal}
+        </p>
+      )}
+    </div>
+  </section>
+
+  <div class="max-w-5xl mx-auto px-4 lg:px-8 py-8">
+
+    <!-- ─── Program Content ─── -->
+    <section class="mb-12">
+      <div class="prose prose-sm sm:prose-base max-w-none">
+        <Content />
+      </div>
+    </section>
+
+    <!-- ─── Workout Days ─── -->
+    {days.length > 0 && (
+      <section class="mb-12">
+        <h2 class="text-xl font-bold mb-4 flex items-center gap-2" style="font-family: 'Outfit', sans-serif;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+          </svg>
+          Workout Days
+        </h2>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {days.map((day) => {
+            const { Content } = day.render();
+            const dayNumber = day.id.match(/day(\d+)\.md$/)[1];
+            
+            return (
+              <a 
+                href={`/workouts/${monthSlug}/day${dayNumber}`}
+                class="card bg-base-200 border border-base-300 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5"
+              >
+                <div class="card-body p-5 sm:p-6">
+                  <h3 class="card-title text-lg font-bold group-hover:text-primary transition-colors">
+                    {day.data.title || `Day ${dayNumber}`}
+                  </h3>
+                  {day.data.focus && (
+                    <p class="text-sm text-base-content/60 mt-1">
+                      {day.data.focus}
+                    </p>
+                  )}
+                  <div class="mt-3 flex items-center gap-2 text-sm">
+                    {day.data.difficulty && (
+                      <span class="badge badge-sm">
+                        {day.data.difficulty}
+                      </span>
+                    )}
+                    {day.data.duration && (
+                      <span class="text-base-content/50">
+                        {day.data.duration}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    )}
+
+
+
+  </div>
+</BaseLayout>

@@ -1,0 +1,149 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* Custom Components */
+.callout {
+  @apply bg-base-200 border-l-4 border-primary p-4 my-6 rounded-r-lg shadow-sm;
+}
+
+.callout p {
+  @apply my-1;
+}
+
+/* Section Styling */
+.prose {
+  h2 {
+    @apply mt-8 mb-4 pb-2 border-b border-base-300 flex items-center gap-2;
+  }
+  
+  h3 {
+    @apply mt-6 mb-3 text-lg font-semibold text-base-content/90;
+  }
+  
+  ul, ol {
+    @apply my-4 pl-5 space-y-2;
+  }
+  
+  li {
+    @apply pl-2;
+  }
+  
+  strong {
+    @apply font-semibold text-base-content/90;
+  }
+  
+  hr {
+    @apply my-8 border-base-300;
+  }
+}
+
+/* Exercise Groups */
+.exercise-group {
+  @apply bg-base-100 p-4 rounded-lg my-6 border border-base-300;
+}
+
+.exercise-group h3 {
+  margin-top: 0;
+}
+
+/* ─── Light theme ─── */
+@plugin "daisyui/theme" {
+  name: "gym";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+  --color-primary: oklch(0.65 0.2 25);
+  --color-primary-content: oklch(0.98 0 0);
+  --color-secondary: oklch(0.45 0.05 250);
+  --color-secondary-content: oklch(0.98 0 0);
+  --color-accent: oklch(0.72 0.15 180);
+  --color-accent-content: oklch(0.15 0 0);
+  --color-neutral: oklch(0.28 0.01 260);
+  --color-neutral-content: oklch(0.92 0 0);
+  --color-base-100: oklch(0.98 0.005 80);
+  --color-base-200: oklch(0.94 0.005 80);
+  --color-base-300: oklch(0.88 0.01 80);
+  --color-base-content: oklch(0.22 0.01 260);
+  --color-info: oklch(0.7 0.12 230);
+  --color-info-content: oklch(0.98 0 0);
+  --color-success: oklch(0.7 0.17 145);
+  --color-success-content: oklch(0.98 0 0);
+  --color-warning: oklch(0.8 0.16 75);
+  --color-warning-content: oklch(0.2 0 0);
+  --color-error: oklch(0.6 0.2 25);
+  --color-error-content: oklch(0.98 0 0);
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+}
+
+/* ─── Dark theme ─── */
+@plugin "daisyui/theme" {
+  name: "gymdark";
+  prefersdark: true;
+  color-scheme: dark;
+  --color-primary: oklch(0.7 0.2 25);
+  --color-primary-content: oklch(0.98 0 0);
+  --color-secondary: oklch(0.6 0.08 250);
+  --color-secondary-content: oklch(0.98 0 0);
+  --color-accent: oklch(0.75 0.15 180);
+  --color-accent-content: oklch(0.12 0 0);
+  --color-neutral: oklch(0.35 0.01 260);
+  --color-neutral-content: oklch(0.92 0 0);
+  --color-base-100: oklch(0.18 0.01 260);
+  --color-base-200: oklch(0.15 0.01 260);
+  --color-base-300: oklch(0.12 0.01 260);
+  --color-base-content: oklch(0.9 0.005 80);
+  --color-info: oklch(0.7 0.12 230);
+  --color-info-content: oklch(0.98 0 0);
+  --color-success: oklch(0.7 0.17 145);
+  --color-success-content: oklch(0.98 0 0);
+  --color-warning: oklch(0.8 0.16 75);
+  --color-warning-content: oklch(0.2 0 0);
+  --color-error: oklch(0.6 0.2 25);
+  --color-error-content: oklch(0.98 0 0);
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+}
+
+/* ─── Typography: Google Fonts ─── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* ─── Base Styles ─── */
+html {
+  font-family: 'DM Sans', sans-serif;
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+}
+
+.prose h2 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  scroll-margin-top: 5rem;
+}
+
+.prose h3 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  scroll-margin-top: 5rem;
+}
+
+.prose table {
+  font-size: 0.9rem;
+}
+
+.prose th {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+[id] {
+  scroll-margin-top: 5rem;
+}

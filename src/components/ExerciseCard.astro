@@ -1,0 +1,83 @@
+---
+interface ExerciseProps {
+  name: string;
+  sets: number;
+  reps: string;
+  rest: string;
+  rpe: number;
+  cues?: string[];
+  notes?: string;
+  variant?: 'A' | 'B' | 'C1' | 'C2' | 'D' | 'E' | 'F' | 'G';
+}
+
+const { 
+  name, 
+  sets, 
+  reps, 
+  rest, 
+  rpe, 
+  cues = [],
+  notes,
+  variant
+} = Astro.props;
+
+const variantColors = {
+  A: 'bg-primary/10 border-l-primary',
+  B: 'bg-secondary/10 border-l-secondary',
+  C1: 'bg-accent/10 border-l-accent',
+  C2: 'bg-accent/10 border-l-accent',
+  D: 'bg-info/10 border-l-info',
+  E: 'bg-success/10 border-l-success',
+  F: 'bg-warning/10 border-l-warning',
+  G: 'bg-error/10 border-l-error',
+};
+
+const borderClass = variant ? variantColors[variant] : 'bg-base-200 border-l-base-300';
+---
+
+<div class={`p-4 rounded-lg border-l-4 mb-6 ${borderClass}`}>
+  <div class="flex items-center gap-3 mb-3">
+    {variant && (
+      <span class="font-mono font-bold text-sm px-2 py-1 rounded bg-base-100">
+        {variant}
+      </span>
+    )}
+    <h3 class="text-lg font-bold m-0">{name}</h3>
+  </div>
+
+  <div class="grid grid-cols-4 gap-2 mb-4">
+    <div class="text-center">
+      <div class="text-xs font-medium text-base-content/60">Sets</div>
+      <div class="text-lg font-bold">{sets}</div>
+    </div>
+    <div class="text-center">
+      <div class="text-xs font-medium text-base-content/60">Reps</div>
+      <div class="text-lg font-bold">{reps}</div>
+    </div>
+    <div class="text-center">
+      <div class="text-xs font-medium text-base-content/60">Rest</div>
+      <div class="text-lg font-bold">{rest}</div>
+    </div>
+    <div class="text-center">
+      <div class="text-xs font-medium text-base-content/60">RPE</div>
+      <div class="text-lg font-bold">{rpe}</div>
+    </div>
+  </div>
+
+  {cues.length > 0 && (
+    <div class="mt-3">
+      <div class="text-xs font-medium text-base-content/60 mb-1">Cues</div>
+      <ul class="list-disc pl-5 space-y-1">
+        {cues.map((cue) => (
+          <li class="text-sm text-base-content/80">{cue}</li>
+        ))}
+      </ul>
+    </div>
+  )}
+
+  {notes && (
+    <div class="mt-3 p-2 bg-base-100/50 rounded text-sm italic text-base-content/70">
+      {notes}
+    </div>
+  )}
+</div>

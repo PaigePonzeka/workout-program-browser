@@ -1,0 +1,133 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import MonthCard from "../components/MonthCard.astro";
+import { getCollection } from "astro:content";
+
+// Get all workout programs
+const allWorkouts = await getCollection("workouts");
+
+// Filter out any entries without monthSlug and sort by monthSlug in descending order (newest first)
+const months = allWorkouts
+  .filter(entry => entry.data.monthSlug) // Only include entries with monthSlug
+  .sort((a, b) => (b.data.monthSlug || "").localeCompare(a.data.monthSlug || ""));
+
+const featured = months[0]; // First item is the most recent
+---
+
+<BaseLayout title="Home" description="AI-powered monthly workout programming. Browse structured training programs designed for progressive overload.">
+
+  <!-- ─── Hero Section ─── -->
+  <section class="relative overflow-hidden">
+    {/* Background texture */}
+    <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-base-100 to-accent/5"></div>
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0); background-size: 24px 24px;"></div>
+
+    <div class="relative max-w-5xl mx-auto px-4 lg:px-8 py-16 sm:py-24">
+      <div class="max-w-2xl">
+        {/* Pill badge */}
+        <div class="inline-flex items-center gap-2 badge badge-outline badge-lg mb-6 pr-4">
+          <span class="badge badge-primary badge-sm">New</span>
+          <span class="text-xs">
+            {featured
+              ? `${featured.data.month} programming is live`
+              : "Browse all programs"}
+          </span>
+        </div>
+
+        {/* Headline */}
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]" style="font-family: 'Outfit', sans-serif;">
+          Your training.
+          <br />
+          <span class="text-primary">Programmed.</span>
+        </h1>
+
+        {/* Description */}
+        <p class="text-lg text-base-content/60 mt-5 max-w-lg leading-relaxed">
+          Structured monthly workout programs built with progressive overload,
+          periodization, and real coaching principles. Browse, follow, and train.
+        </p>
+
+        {/* CTAs */}
+        <div class="flex flex-wrap gap-3 mt-8">
+          {featured && (
+            <a
+              href={`/workouts/${featured.data.monthSlug}`}
+              class="btn btn-primary btn-md gap-2"
+            >
+              Start Current Program
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </a>
+          )}
+          <a href="#programs" class="btn btn-ghost btn-md">
+            Browse All Programs
+          </a>
+        </div>
+      </div>
+
+      {/* Stats strip */}
+      <div class="grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-base-300 max-w-md">
+        <div>
+          <p class="text-2xl font-bold text-primary" style="font-family: 'Outfit', sans-serif;">
+            {months.length}
+          </p>
+          <p class="text-xs text-base-content/40 mt-0.5">Programs</p>
+        </div>
+        <div>
+          <p class="text-2xl font-bold" style="font-family: 'Outfit', sans-serif;">
+            {months.length * 4} {/* Approximate 4 weeks per month */}
+          </p>
+          <p class="text-xs text-base-content/40 mt-0.5">Workouts</p>
+        </div>
+        <div>
+          <p class="text-2xl font-bold" style="font-family: 'Outfit', sans-serif;">
+            100%
+          </p>
+          <p class="text-xs text-base-content/40 mt-0.5">Free</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Programs Listing ─── -->
+  <section id="programs" class="max-w-5xl mx-auto px-4 lg:px-8 py-12 sm:py-16">
+    <div class="flex items-end justify-between mb-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight" style="font-family: 'Outfit', sans-serif;">
+          All Programs
+        </h2>
+        <p class="text-sm text-base-content/50 mt-1">Ordered by date, newest first</p>
+      </div>
+    </div>
+
+    {/* Grid of month cards */}
+    <div class="grid gap-4 sm:grid-cols-2">
+      {months.map((month, index) => {
+        // Parse the month slug to get a display name (e.g., "2026-02" -> "February 2026")
+        const date = month.data.monthSlug ? new Date(`${month.data.monthSlug}-01`) : new Date();
+        const monthName = date.toLocaleString('default', { month: 'long' });
+        const year = date.getFullYear();
+        const displayDate = `${monthName} ${year}`;
+        
+        return (
+          <MonthCard
+            title={month.data.title || displayDate}
+            monthSlug={month.data.monthSlug}
+            phase={month.data.title || displayDate}
+            goal={month.data.title ? `Workout program for ${displayDate}` : `Monthly workout program for ${displayDate}`}
+            split="Full Body"
+            totalDays={4} // Default to 4 weeks
+            startDate={month.data.monthSlug || displayDate}
+            featured={index === 0}
+          />
+        );
+      })}
+    </div>
+
+    {months.length === 0 && (
+      <div class="text-center py-16">
+        <p class="text-base-content/40 text-lg">No programs yet. Check back soon!</p>
+      </div>
+    )}
+  </section>
+
+</BaseLayout>

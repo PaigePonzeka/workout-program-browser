@@ -1,0 +1,53 @@
+---
+interface Props {
+  dayNumber: number;
+  title: string;
+  focus: string;
+  duration: string;
+  difficulty: string;
+  muscleGroups: string[];
+  href: string;
+}
+
+const { dayNumber, title, focus, duration, difficulty, muscleGroups, href } = Astro.props;
+
+const difficultyBadge: Record<string, string> = {
+  beginner: "badge-success",
+  intermediate: "badge-warning",
+  advanced: "badge-error",
+};
+---
+
+<a href={href} class="group block">
+  <div class="card bg-base-200 border border-base-300 hover:border-primary/40 transition-all duration-300 hover:shadow-md">
+    <div class="card-body p-4 sm:p-5">
+      <div class="flex items-center gap-3">
+        {/* Day number badge */}
+        <div class="w-11 h-11 rounded-xl bg-primary/10 text-primary font-bold flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-content transition-colors" style="font-family: 'Outfit', sans-serif;">
+          {dayNumber}
+        </div>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-semibold text-base group-hover:text-primary transition-colors truncate" style="font-family: 'Outfit', sans-serif;">
+            {title}
+          </h3>
+          <p class="text-xs text-base-content/50 mt-0.5">{focus}</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-base-content/20 group-hover:text-primary transition-all shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+      </div>
+
+      {/* Tags */}
+      <div class="flex flex-wrap items-center gap-1.5 mt-3 pt-3 border-t border-base-300">
+        <span class="badge badge-sm badge-ghost gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          {duration}
+        </span>
+        <span class={`badge badge-sm ${difficultyBadge[difficulty] || "badge-ghost"} badge-outline`}>
+          {difficulty}
+        </span>
+        {muscleGroups.slice(0, 3).map((mg) => (
+          <span class="badge badge-sm badge-ghost">{mg}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+</a>
