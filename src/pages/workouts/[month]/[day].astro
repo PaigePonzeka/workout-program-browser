@@ -1,9 +1,5 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import DayNav from "@/components/DayNav.astro";
-import TableOfContents from "@/components/TableOfContents.astro";
-import ExerciseGroup from "@/components/ExerciseGroup.astro";
-import ExerciseCard from "@/components/ExerciseCard.astro";
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
@@ -12,23 +8,22 @@ export async function getStaticPaths() {
 
   // Process each day entry
   for (const entry of allWorkouts) {
-    if (entry.data.type !== "day") continue;
+    // Skip non-day entries (should be in format '2024-06/day1.md')
+    if (!entry.id.match(/\/day\d+\.md$/)) continue;
 
-    // Extract month slug from the entry ID
-    // Handle both '2026-02/day1.md' and 'workouts/2026-02/day1.md' formats
+    // Extract month and day info from the entry ID
     const parts = entry.id.split('/');
     const monthSlug = parts[0] === 'workouts' ? parts[1] : parts[0];
-    const dayNumber = entry.data.dayNumber;
+    const dayMatch = entry.id.match(/day(\d+)\.md$/);
     
-    if (!dayNumber) {
-      console.warn(`Day entry ${entry.id} is missing dayNumber`);
-      continue;
-    }
+    if (!dayMatch) continue;
+    
+    const dayNumber = parseInt(dayMatch[1], 10);
+    const daySlug = `day${dayNumber}`;
 
-    // Find the corresponding month entry
+    // Find the corresponding month entry (should be in the same directory)
     const monthEntry = allWorkouts.find(e => 
-      e.data.type === 'month' && 
-      (e.id.startsWith(monthSlug) || e.id.endsWith(monthSlug))
+      e.id.endsWith(`${monthSlug}/index.md`)
     );
 
     if (!monthEntry) {
@@ -39,12 +34,12 @@ export async function getStaticPaths() {
     dayEntries.push({
       params: {
         month: monthSlug,
-        day: `day${dayNumber}`,
+        day: daySlug,
       },
       props: { 
         entryId: entry.id,
         monthSlug,
-        monthEntryId: monthEntry.id
+        dayNumber
       },
     });
   }
@@ -52,196 +47,145 @@ export async function getStaticPaths() {
   return dayEntries;
 }
 
-const { entryId, monthSlug, monthEntryId } = Astro.props;
+const { entryId, monthSlug, dayNumber } = Astro.props as {
+  entryId: string;
+  monthSlug: string;
+  dayNumber: number;
+};
+
 const allWorkouts = await getCollection("workouts");
 
 // Find the day entry by its exact ID
 const entry = allWorkouts.find(e => e.id === entryId);
 if (!entry) {
-  console.error(`Day entry not found: ${entryId}`);
   return Astro.redirect("/404");
 }
 
-// Find the month entry by its exact ID
-const monthEntry = allWorkouts.find(e => e.id === monthEntryId);
+// Find the month entry
+const monthEntry = allWorkouts.find(e => 
+  e.id.endsWith(`${monthSlug}/index.md`)
+);
+
 if (!monthEntry) {
-  console.error(`Month entry not found for day: ${entryId}`);
   return Astro.redirect("/404");
 }
 
 // Get all days for this month for navigation
 const monthDays = allWorkouts
-  .filter(e => 
-    e.data.type === 'day' && 
-    e.id.startsWith(monthSlug)
-  )
-  .sort((a, b) => (a.data.dayNumber || 0) - (b.data.dayNumber || 0));
+  .filter(e => {
+    const dayMatch = e.id.match(/day(\d+)\.md$/);
+    return dayMatch && e.id.includes(monthSlug);
+  })
+  .sort((a, b) => {
+    const aDay = parseInt(a.id.match(/day(\d+)\.md$/)?.[1] || '0', 10);
+    const bDay = parseInt(b.id.match(/day(\d+)\.md$/)?.[1] || '0', 10);
+    return aDay - bDay;
+  });
 
 const currentIndex = monthDays.findIndex(e => e.id === entryId);
 const prevDay = currentIndex > 0 ? monthDays[currentIndex - 1] : null;
 const nextDay = currentIndex < monthDays.length - 1 ? monthDays[currentIndex + 1] : null;
 
 // Render content
-const { Content, headings } = await entry.render();
+const { Content } = await entry.render();
 
-const monthTitle = monthEntry.data.month || monthSlug;
+const monthTitle = monthEntry.data.title || monthSlug;
 const monthHref = `/workouts/${monthSlug}`;
 
 const breadcrumbs = [
   { label: "Home", href: "/" },
-  { label: monthTitle, href: monthHref },
-  { label: `Day ${entry.data.dayNumber}` },
+  { label: "Workouts", href: "/workouts" },
+  { label: monthSlug, href: monthHref },
+  { label: `Day ${dayNumber}` },
 ];
-
-const difficultyColors: Record<string, string> = {
-  beginner: "badge-success",
-  intermediate: "badge-warning",
-  advanced: "badge-error",
-};
 ---
 
 <BaseLayout
-  title={`Day ${entry.data.dayNumber}: ${entry.data.title}`}
-  description={entry.data.focus || entry.data.title}
+  title={`${entry.data.title} - ${monthTitle}`}
+  description={entry.data.focus || `Day ${dayNumber} of ${monthTitle} workout program`}
   breadcrumbs={breadcrumbs}
+  class="bg-base-100"
 >
-
   <div class="max-w-3xl mx-auto px-4 lg:px-8 py-8 sm:py-10">
-
-    <!-- ─── Day Header ─── -->
-    <header class="mb-6">
-      <div class="flex items-center gap-3 mb-3">
-        <div class="w-12 h-12 rounded-xl bg-primary text-primary-content font-bold text-lg flex items-center justify-center" style="font-family: 'Outfit', sans-serif;">
-          {entry.data.dayNumber}
-        </div>
+    <!-- Day Header -->
+    <header class="mb-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <p class="text-xs text-base-content/40 uppercase tracking-widest font-medium">
-            Day {entry.data.dayNumber}
-          </p>
-          <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight" style="font-family: 'Outfit', sans-serif;">
+          <a href={monthHref} class="inline-flex items-center text-sm text-primary hover:underline mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to {monthTitle}
+          </a>
+          <h1 class="text-3xl font-bold tracking-tight">
             {entry.data.title}
           </h1>
         </div>
-      </div>
 
-      {/* Meta badges */}
-      <div class="flex flex-wrap gap-2 mt-4">
-        {entry.data.focus && (
-          <span class="badge badge-primary badge-outline badge-sm">{entry.data.focus}</span>
-        )}
-        {entry.data.duration && (
-          <span class="badge badge-ghost badge-sm gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            {entry.data.duration}
-          </span>
-        )}
-        {entry.data.difficulty && (
-          <span class={`badge badge-sm badge-outline ${difficultyColors[entry.data.difficulty] || ""}`}>
-            {entry.data.difficulty}
-          </span>
-        )}
-      </div>
-
-      {/* Equipment list */}
-      {entry.data.equipment && entry.data.equipment.length > 0 && (
-        <div class="mt-4 p-3 bg-base-200 rounded-xl border border-base-300">
-          <p class="text-xs text-base-content/40 uppercase tracking-widest font-medium mb-1.5">Equipment Needed</p>
-          <div class="flex flex-wrap gap-1.5">
-            {entry.data.equipment.map((item) => (
-              <span class="badge badge-sm badge-ghost">{item}</span>
-            ))}
-          </div>
+        <div class="flex items-center gap-3">
+          <span class="badge badge-primary">Day {dayNumber}</span>
         </div>
-      )}
+      </div>
+
+      <!-- Navigation -->
+      <div class="border-t border-base-300 pt-6">
+        <div class="flex justify-between items-center">
+          {prevDay ? (
+            <a 
+              href={`/workouts/${monthSlug}/day${prevDay.id.match(/day(\d+)\.md$/)?.[1] || ''}`}
+              class="btn btn-ghost btn-sm"
+            >
+              ← Previous
+            </a>
+          ) : <div></div>}
+          
+          {nextDay && (
+            <a 
+              href={`/workouts/${monthSlug}/day${nextDay.id.match(/day(\d+)\.md$/)?.[1] || ''}`}
+              class="btn btn-ghost btn-sm"
+            >
+              Next →
+            </a>
+          )}
+        </div>
+      </div>
     </header>
 
-    <!-- ─── Table of Contents ─── -->
-    <TableOfContents headings={headings} />
+    <!-- Main Content -->
+    <main class="prose prose-sm sm:prose-base max-w-none">
+      <Content />
+    </main>
 
-    <!-- ─── Workout Content ─── -->
-    <div class="space-y-8">
-      <ExerciseGroup title="Warm-Up">
-        <div class="space-y-4">
-          <ExerciseCard 
-            name="Band Pull-Aparts"
-            sets={2}
-            reps="15"
-            rest="30 sec"
-            rpe={4}
-            cues={["Keep shoulders down and back", "Squeeze shoulder blades together"]}
-          />
-          
-          <ExerciseCard 
-            name="Arm Circles"
-            sets={1}
-            reps="30 sec"
-            rest="30 sec"
-            rpe={3}
-            cues={["Forward and backward", "Keep core engaged"]}
-          />
+    <!-- More Workouts -->
+    {monthDays.length > 1 && (
+      <div class="mt-16 pt-8 border-t border-base-300">
+        <h2 class="text-xl font-semibold mb-6">More Workouts in {monthTitle}</h2>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {monthDays
+            .filter(day => day.id !== entryId)
+            .slice(0, 4)
+            .map(day => {
+              const dayNum = day.id.match(/day(\d+)\.md$/)?.[1] || '0';
+              return (
+                <a 
+                  href={`/workouts/${monthSlug}/day${dayNum}`}
+                  class="block p-4 rounded-lg border border-base-300 hover:border-primary/50 hover:shadow transition-all"
+                >
+                  <h3 class="font-medium">{day.data.title || `Day ${dayNum}`}</h3>
+                  {day.data.focus && (
+                    <p class="text-sm text-base-content/60 mt-1 line-clamp-2">
+                      {day.data.focus}
+                    </p>
+                  )}
+                </a>
+              );
+            })}
         </div>
-      </ExerciseGroup>
+      </div>
+    )}
+  </div>
+</BaseLayout>
 
-      <ExerciseGroup title="Main Work">
-        <div class="space-y-6">
-          <ExerciseCard 
-            variant="A"
-            name="Incline Barbell Bench Press"
-            sets={4}
-            reps="6-8"
-            rest="2-3 min"
-            rpe={8}
-            cues={["45° bench angle", "Bar to upper chest", "Squeeze at the top"]}
-          />
-
-          <ExerciseCard 
-            variant="B"
-            name="Dumbbell Shoulder Press"
-            sets={3}
-            reps="8-10"
-            rest="90 sec"
-            rpe={7}
-            cues={["Elbows slightly forward", "Press overhead with control"]}
-          />
-        </div>
-      </ExerciseGroup>
-
-      <ExerciseGroup title="Accessory Work">
-        <div class="space-y-6">
-          <ExerciseCard 
-            variant="C1"
-            name="Incline Dumbbell Fly"
-            sets={3}
-            reps="12-15"
-            rest="60 sec"
-            rpe={8}
-            cues={["Slight bend in elbows", "Control the stretch"]}
-          />
-
-          <ExerciseCard 
-            variant="C2"
-            name="Lateral Raises"
-            sets={3}
-            reps="15-20"
-            rest="45 sec"
-            rpe={8}
-            cues={["Slight bend in elbows", "Raise to shoulder height"]}
-          />
-        </div>
-      </ExerciseGroup>
-    </div>
-
-    <!-- ─── Prev/Next Navigation ─── -->
-    <DayNav
-      prev={prevDay ? {
-        dayNumber: prevDay.data.dayNumber!,
-        title: prevDay.data.title,
-        href: `/workouts/${monthSlug}/day${prevDay.data.dayNumber}`,
-      } : undefined}
-      next={nextDay ? {
-        dayNumber: nextDay.data.dayNumber!,
-        title: nextDay.data.title,
-        href: `/workouts/${monthSlug}/day${nextDay.data.dayNumber}`,
       } : undefined}
       monthHref={monthHref}
       monthTitle={monthTitle}
