@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import MonthCard from "../components/MonthCard.astro";
 import { getCollection } from "astro:content";
+import { getUrl } from "../utils/url";
 
 // Get all workout programs
 const allWorkouts = await getCollection("workouts");
@@ -51,7 +52,7 @@ const featured = months[0]; // First item is the most recent
         <div class="flex flex-wrap gap-3 mt-8">
           {featured && (
             <a
-              href={`/workouts/${featured.data.monthSlug}`}
+              href={getUrl(`workouts/${featured.data.monthSlug}`)}
               class="btn btn-primary btn-md gap-2"
             >
               Start Current Program

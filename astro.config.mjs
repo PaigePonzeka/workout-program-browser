@@ -5,7 +5,7 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://YOUR_GITHUB_USERNAME.github.io',
+  site: 'https://paigeponzeka.github.io',
   base: '/workout-program-browser',
   integrations: [mdx()],
   vite: {
