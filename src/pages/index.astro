@@ -24,58 +24,80 @@ const featured = months[0]; // First item is the most recent
     <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0); background-size: 24px 24px;"></div>
 
     <div class="relative max-w-5xl mx-auto px-4 lg:px-8 py-16 sm:py-24">
-      <div class="max-w-2xl">
-        
-        {/* Headline */}
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]" style="font-family: 'Outfit', sans-serif;">
-          Your training.
-          <br />
-          <span class="text-primary">Programmed.</span>
-        </h1>
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
 
-        {/* Description */}
-        <p class="text-lg text-base-content/60 mt-5 max-w-lg leading-relaxed">
-          Structured monthly workout programs built with progressive overload,
-          periodization, and real coaching principles. Browse, follow, and train.
-        </p>
+        {/* Left: Text Content */}
+        <div>
+          {/* Headline */}
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]" style="font-family: 'Outfit', sans-serif;">
+            Your training.
+            <br />
+            <span class="text-primary">Programmed.</span>
+          </h1>
 
-        {/* CTAs */}
-        <div class="flex flex-wrap gap-3 mt-8">
-          {featured && (
-            <a
-              href={getUrl(`workouts/${featured.data.monthSlug}`)}
-              class="btn btn-primary btn-md gap-2"
-            >
-              Start Current Program
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          {/* Description */}
+          <p class="text-lg text-base-content/60 mt-5 max-w-lg leading-relaxed">
+            Structured monthly workout programs built with progressive overload,
+            periodization, and real coaching principles. Browse, follow, and train.
+          </p>
+
+          {/* CTAs */}
+          <div class="flex flex-wrap gap-3 mt-8">
+            {featured && (
+              <a
+                href={getUrl(`workouts/${featured.data.monthSlug}`)}
+                class="btn btn-primary btn-md gap-2"
+              >
+                Start Current Program
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              </a>
+            )}
+            <a href="#programs" class="btn btn-ghost btn-md">
+              Browse All Programs
             </a>
-          )}
-          <a href="#programs" class="btn btn-ghost btn-md">
-            Browse All Programs
-          </a>
-        </div>
-      </div>
+          </div>
 
-      {/* Stats strip */}
-      <div class="grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-base-300 max-w-md">
-        <div>
-          <p class="text-2xl font-bold text-primary" style="font-family: 'Outfit', sans-serif;">
-            {months.length}
-          </p>
-          <p class="text-xs text-base-content/40 mt-0.5">Programs</p>
+          {/* Stats strip */}
+          <div class="grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-base-300">
+            <div>
+              <p class="text-2xl font-bold text-primary" style="font-family: 'Outfit', sans-serif;">
+                {months.length}
+              </p>
+              <p class="text-xs text-base-content/40 mt-0.5">Programs</p>
+            </div>
+            <div>
+              <p class="text-2xl font-bold" style="font-family: 'Outfit', sans-serif;">
+                {months.length * 4} {/* Approximate 4 weeks per month */}
+              </p>
+              <p class="text-xs text-base-content/40 mt-0.5">Workouts</p>
+            </div>
+            <div>
+              <p class="text-2xl font-bold" style="font-family: 'Outfit', sans-serif;">
+                100%
+              </p>
+              <p class="text-xs text-base-content/40 mt-0.5">Free</p>
+            </div>
+          </div>
         </div>
-        <div>
-          <p class="text-2xl font-bold" style="font-family: 'Outfit', sans-serif;">
-            {months.length * 4} {/* Approximate 4 weeks per month */}
-          </p>
-          <p class="text-xs text-base-content/40 mt-0.5">Workouts</p>
+
+        {/* Right: Hero Image */}
+        <div class="relative order-first lg:order-last">
+          <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-base-300">
+            <img
+              src={`${import.meta.env.BASE_URL}/hero_image.jpg`}
+              alt="Athlete training in gym"
+              class="w-full h-auto object-cover aspect-[4/3]"
+              loading="eager"
+            />
+            {/* Optional overlay gradient for depth */}
+            <div class="absolute inset-0 bg-gradient-to-t from-base-300/20 to-transparent pointer-events-none"></div>
+          </div>
+
+          {/* Decorative element */}
+          <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+          <div class="absolute -top-6 -left-6 w-40 h-40 bg-accent/10 rounded-full blur-3xl -z-10"></div>
         </div>
-        <div>
-          <p class="text-2xl font-bold" style="font-family: 'Outfit', sans-serif;">
-            100%
-          </p>
-          <p class="text-xs text-base-content/40 mt-0.5">Free</p>
-        </div>
+
       </div>
     </div>
   </section>
