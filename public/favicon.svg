@@ -1,4 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#d4532a"/>
-  <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="sans-serif" font-weight="bold" font-size="20">F</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Outer plate rim -->
+  <circle cx="64" cy="64" r="62" fill="#1a1a1a" stroke="#4a4a4a" stroke-width="2"/>
+
+  <!-- Inner plate ring -->
+  <circle cx="64" cy="64" r="54" fill="#2a2a2a" stroke="#5a5a5a" stroke-width="1.5"/>
+
+  <!-- Center plate -->
+  <circle cx="64" cy="64" r="48" fill="#1a1a1a"/>
+
+  <!-- Weight plate holes (6 holes around the edge) -->
+  <circle cx="64" cy="24" r="3" fill="#0a0a0a"/>
+  <circle cx="98.9" cy="41.1" r="3" fill="#0a0a0a"/>
+  <circle cx="98.9" cy="86.9" r="3" fill="#0a0a0a"/>
+  <circle cx="64" cy="104" r="3" fill="#0a0a0a"/>
+  <circle cx="29.1" cy="86.9" r="3" fill="#0a0a0a"/>
+  <circle cx="29.1" cy="41.1" r="3" fill="#0a0a0a"/>
+
+  <!-- Center hub -->
+  <circle cx="64" cy="64" r="38" fill="#3a3a3a"/>
+
+  <!-- "F" Letter Mark -->
+  <text
+    x="64"
+    y="64"
+    font-family="'Outfit', sans-serif"
+    font-size="64"
+    font-weight="900"
+    fill="#ff6b35"
+    text-anchor="middle"
+    dominant-baseline="central"
+    style="text-transform: uppercase; letter-spacing: -2px;">F</text>
 </svg>
