@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://paigeponzeka.github.io/workout-program-browser/sitemap-index.xml
