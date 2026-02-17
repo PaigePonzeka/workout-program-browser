@@ -1,6 +1,6 @@
 export function getUrl(path: string): string {
-  // Remove any leading slashes to avoid double slashes
-  const cleanPath = path.replace(/^\/\/+/, '');
+  // Remove all leading slashes to avoid double slashes when prepending the base
+  const cleanPath = path.replace(/^\/+/, '');
   const baseUrl = import.meta.env.BASE_URL || '/';
   
   // Ensure base URL ends with exactly one slash

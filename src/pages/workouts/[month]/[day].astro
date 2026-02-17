@@ -16,14 +16,14 @@ export async function getStaticPaths() {
     const parts = entry.id.split('/');
     const monthSlug = parts[0] === 'workouts' ? parts[1] : parts[0];
     const dayMatch = entry.id.match(/day(\d+)\.md$/);
-    
+
     if (!dayMatch) continue;
-    
+
     const dayNumber = parseInt(dayMatch[1], 10);
     const daySlug = `day${dayNumber}`;
 
     // Find the corresponding month entry (should be in the same directory)
-    const monthEntry = allWorkouts.find(e => 
+    const monthEntry = allWorkouts.find(e =>
       e.id.endsWith(`${monthSlug}/index.md`)
     );
 
@@ -37,7 +37,7 @@ export async function getStaticPaths() {
         month: monthSlug,
         day: daySlug,
       },
-      props: { 
+      props: {
         entryId: entry.id,
         monthSlug,
         dayNumber
@@ -63,7 +63,7 @@ if (!entry) {
 }
 
 // Find the month entry
-const monthEntry = allWorkouts.find(e => 
+const monthEntry = allWorkouts.find(e =>
   e.id.endsWith(`${monthSlug}/index.md`)
 );
 
@@ -92,24 +92,57 @@ const { Content } = await entry.render();
 
 const monthTitle = monthEntry.data.title || monthSlug;
 const monthHref = `/workouts/${monthSlug}`;
+// Files are 0-indexed (day0.md, day1.md…); display as 1-indexed to users
+const displayDay = dayNumber + 1;
 
 const breadcrumbs = [
   { label: "Home", href: "/" },
-  { label: "Workouts", href: "/workouts" },
-  { label: monthSlug, href: monthHref },
-  { label: `Day ${dayNumber}` },
+  { label: monthTitle, href: monthHref },
+  { label: `Day ${displayDay}` },
 ];
 
 const siteBase = Astro.site
   ? new URL(import.meta.env.BASE_URL || "/", Astro.site).href.replace(/\/$/, "")
   : "";
 
-const dayDescription = (entry.data as any).focus || `Day ${dayNumber} of the ${monthTitle} workout program. Progressive overload training for intermediate lifters.`;
+// Keyword-rich meta description for SEO and AIO
+const dayDescription = `${entry.data.title} — Day ${displayDay} of the ${monthTitle} workout program. A 45–60 minute functional fitness session with strength work and metabolic conditioning. Part of FORGED's free monthly training programs built on progressive overload.`;
 
+// Primary schema: ExercisePlan — tells search engines and AI exactly what this page is
+const exercisePlanSchema = {
+  "@context": "https://schema.org",
+  "@type": "ExercisePlan",
+  name: entry.data.title,
+  description: dayDescription,
+  url: `${siteBase}/workouts/${monthSlug}/day${dayNumber}/`,
+  activityDuration: {
+    "@type": "QuantitativeValue",
+    minValue: 45,
+    maxValue: 60,
+    unitCode: "MIN",
+  },
+  activityFrequency: "Once per training day",
+  exerciseType: "Functional Fitness",
+  intensity: "Moderate to High",
+  restPeriods: "1–3 minutes between strength sets; self-directed rest on conditioning work",
+  additionalVariable: "Progressive overload applied week over week across the 4-week program",
+  isPartOf: {
+    "@type": "ExercisePlan",
+    name: monthTitle,
+    url: `${siteBase}/workouts/${monthSlug}/`,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "FORGED",
+    url: `${siteBase}/`,
+  },
+};
+
+// Secondary schema: Article — improves AIO pickup by generative search engines
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: entry.data.title,
+  headline: `${entry.data.title} — Day ${displayDay} Workout`,
   description: dayDescription,
   url: `${siteBase}/workouts/${monthSlug}/day${dayNumber}/`,
   isPartOf: {
@@ -126,16 +159,19 @@ const articleSchema = {
 ---
 
 <BaseLayout
-  title={`${entry.data.title} - ${monthTitle}`}
+  title={`${entry.data.title} — Day ${displayDay} | ${monthTitle}`}
   description={dayDescription}
   breadcrumbs={breadcrumbs}
   ogType="article"
-  schema={articleSchema}
+  schema={[exercisePlanSchema, articleSchema]}
 >
   <div class="max-w-3xl mx-auto px-4 lg:px-8 py-8 sm:py-10">
+
     <!-- Day Header -->
     <header class="mb-8">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+
+      <!-- Back link + title row -->
+      <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
         <div>
           <a href={getUrl(monthHref)} class="inline-flex items-center text-sm text-primary hover:underline mb-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -143,34 +179,63 @@ const articleSchema = {
             </svg>
             Back to {monthTitle}
           </a>
-          <h1 class="text-3xl font-bold tracking-tight">
+          <h1 class="text-3xl sm:text-4xl font-bold tracking-tight" style="font-family: 'Outfit', sans-serif;">
             {entry.data.title}
           </h1>
         </div>
-
-        <div class="flex items-center gap-3">
-          <span class="badge badge-primary">Day {dayNumber}</span>
+        <div class="shrink-0">
+          <span class="badge badge-primary badge-lg">Day {displayDay}</span>
         </div>
       </div>
 
-      <!-- Navigation -->
-      <div class="border-t border-base-300 pt-6">
+      <!-- Workout metadata strip -->
+      <div class="flex flex-wrap gap-x-5 gap-y-2 text-sm text-base-content/50 mb-6">
+        <span class="inline-flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          45–60 min
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+          {monthTitle}
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          Day {displayDay} of {monthDays.length}
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+          </svg>
+          Progressive overload
+        </span>
+      </div>
+
+      <!-- Prev / Next navigation -->
+      <div class="border-t border-base-300 pt-5">
         <div class="flex justify-between items-center">
           {prevDay ? (
-            <a 
+            <a
               href={getUrl(`workouts/${monthSlug}/day${prevDay.id.match(/day(\d+)\.md$/)?.[1] || ''}`)}
-              class="btn btn-ghost btn-sm"
+              class="btn btn-ghost btn-sm gap-1"
             >
-              ← Previous
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+              Previous
             </a>
-          ) : <div></div>}
-          
+          ) : <div />}
+
           {nextDay && (
-            <a 
+            <a
               href={getUrl(`workouts/${monthSlug}/day${nextDay.id.match(/day(\d+)\.md$/)?.[1] || ''}`)}
-              class="btn btn-ghost btn-sm"
+              class="btn btn-ghost btn-sm gap-1"
             >
-              Next →
+              Next
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
             </a>
           )}
         </div>
@@ -178,45 +243,41 @@ const articleSchema = {
     </header>
 
     <!-- Main Content -->
-    <main class="prose prose-sm sm:prose-base max-w-none">
+    <article class="prose prose-sm sm:prose-base max-w-none">
       <Content />
-    </main>
+    </article>
 
-    <!-- More Workouts -->
+    <!-- More Workouts in This Program -->
     {monthDays.length > 1 && (
       <div class="mt-16 pt-8 border-t border-base-300">
-        <h2 class="text-xl font-semibold mb-6">More Workouts in {monthTitle}</h2>
+        <h2 class="text-xl font-semibold mb-6" style="font-family: 'Outfit', sans-serif;">
+          More Workouts in {monthTitle}
+        </h2>
         <div class="grid gap-4 sm:grid-cols-2">
           {monthDays
             .filter(day => day.id !== entryId)
             .slice(0, 4)
             .map(day => {
               const dayNum = day.id.match(/day(\d+)\.md$/)?.[1] || '0';
+              const displayNum = parseInt(dayNum, 10) + 1;
               return (
-                <a 
+                <a
                   href={getUrl(`workouts/${monthSlug}/day${dayNum}`)}
                   class="block p-4 rounded-lg border border-base-300 hover:border-primary/50 hover:shadow transition-all"
                 >
-                  <h3 class="font-medium">{day.data.title || `Day ${dayNum}`}</h3>
-                  {day.data.focus && (
-                    <p class="text-sm text-base-content/60 mt-1 line-clamp-2">
-                      {day.data.focus}
-                    </p>
-                  )}
+                  <div class="flex items-center justify-between gap-2 mb-1">
+                    <h3 class="font-medium text-sm" style="font-family: 'Outfit', sans-serif;">
+                      {day.data.title || `Day ${displayNum}`}
+                    </h3>
+                    <span class="badge badge-ghost badge-sm shrink-0">Day {displayNum}</span>
+                  </div>
+                  <p class="text-xs text-base-content/50">45–60 min · {monthTitle}</p>
                 </a>
               );
             })}
         </div>
       </div>
     )}
-  </div>
-</BaseLayout>
-
-      } : undefined}
-      monthHref={monthHref}
-      monthTitle={monthTitle}
-    />
 
   </div>
-
 </BaseLayout>
