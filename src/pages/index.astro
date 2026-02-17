@@ -13,9 +13,75 @@ const months = allWorkouts
   .sort((a, b) => (b.data.monthSlug || "").localeCompare(a.data.monthSlug || ""));
 
 const featured = months[0]; // First item is the most recent
+
+const siteBase = Astro.site
+  ? new URL(import.meta.env.BASE_URL || "/", Astro.site).href.replace(/\/$/, "")
+  : "";
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "FORGED",
+  url: `${siteBase}/`,
+  description: "Free structured monthly workout programs built on progressive overload and periodization. Designed for intermediate lifters who want real programming — not random exercises.",
+  publisher: {
+    "@type": "Organization",
+    name: "FORGED",
+    url: `${siteBase}/`,
+    logo: {
+      "@type": "ImageObject",
+      url: `${siteBase}/favicon.svg`,
+    },
+  },
+};
+
+const faqs = [
+  {
+    question: "What kind of workouts are in FORGED programs?",
+    answer:
+      "Each monthly program includes four workout types: Push, Pull, Full Body, and Engine (conditioning). Push sessions focus on pressing and overhead movements; Pull sessions target rows, hinges, and pulling patterns; Full Body days combine compound lifts across all planes; and Engine sessions develop cardiovascular capacity and work capacity through functional conditioning work. Together they cover all major movement patterns and energy systems.",
+  },
+  {
+    question: "How long does each workout take?",
+    answer:
+      "Sessions are designed to take 45–60 minutes. Managing your rest periods between sets is the primary lever for staying within that window. Warm-up and cool-down are not included in that estimate, so budget a few extra minutes on each end.",
+  },
+  {
+    question: "What equipment do I need?",
+    answer:
+      "FORGED programs are written for a home gym with basic equipment — barbell, dumbbells, pull-up bar, kettlebell, and a bench — or any standard commercial gym. No specialty machines are required. Most movements have dumbbell or bodyweight substitutions if a piece of equipment isn't available.",
+  },
+  {
+    question: "How do rest days work?",
+    answer:
+      "Rest days are intentionally not programmed. You decide when to take them based on how your body feels, your schedule, and your recovery. A common approach is 3–4 training days per week with at least one rest day between harder sessions. Prioritize sleep, nutrition, and recovery the same way you prioritize training.",
+  },
+  {
+    question: "How often are new programs released?",
+    answer:
+      "A new 4-week program is generated and published every month. Each program is built on progressive overload and periodization principles so that training stress increases appropriately week over week. Previous months remain available so you can revisit or repeat any program.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
 ---
 
-<BaseLayout title="Home" description="AI-powered monthly workout programming. Browse structured training programs designed for progressive overload.">
+<BaseLayout
+  title="Home"
+  description="Free structured monthly workout programs built on progressive overload and periodization. Designed for intermediate lifters who want real programming — not random exercises."
+  schema={[websiteSchema, faqSchema]}
+>
 
   <!-- ─── Hero Section ─── -->
   <section class="relative overflow-hidden">
@@ -30,15 +96,17 @@ const featured = months[0]; // First item is the most recent
         <div>
           {/* Headline */}
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]" style="font-family: 'Outfit', sans-serif;">
-            Your training.
+            Free Workout
             <br />
-            <span class="text-primary">Programmed.</span>
+            Programs,
+            <br />
+            <span class="text-primary">Ready to Go.</span>
           </h1>
 
           {/* Description */}
           <p class="text-lg text-base-content/60 mt-5 max-w-lg leading-relaxed">
-            Structured monthly workout programs built with progressive overload,
-            periodization, and real coaching principles. Browse, follow, and train.
+            <strong>Stop Guessing. Start Training.</strong> — Monthly programs built on progressive
+            overload and periodization. Just pick a program and go.
           </p>
 
           {/* CTAs */}
@@ -81,7 +149,7 @@ const featured = months[0]; // First item is the most recent
         </div>
 
         {/* Right: Hero Image */}
-        <div class="relative order-first lg:order-last">
+        <div class="relative lg:order-last max-w-xs sm:max-w-sm lg:max-w-none mx-auto w-full">
           <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-base-300">
             <img
               src={`${import.meta.env.BASE_URL}/hero_image.jpg`}
@@ -142,6 +210,45 @@ const featured = months[0]; // First item is the most recent
         <p class="text-base-content/40 text-lg">No programs yet. Check back soon!</p>
       </div>
     )}
+  </section>
+
+  <!-- ─── FAQ Section ─── -->
+  <section class="max-w-3xl mx-auto px-4 lg:px-8 py-12 sm:py-16">
+    <div class="mb-8">
+      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight" style="font-family: 'Outfit', sans-serif;">
+        Frequently Asked Questions
+      </h2>
+      <p class="text-sm text-base-content/50 mt-1">Everything you need to know before you start.</p>
+    </div>
+
+    <div class="flex flex-col divide-y divide-base-300">
+      {faqs.map((faq) => (
+        <details class="group py-4">
+          <summary class="flex items-center justify-between gap-4 cursor-pointer list-none">
+            <span class="font-semibold text-base leading-snug" style="font-family: 'Outfit', sans-serif;">
+              {faq.question}
+            </span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 shrink-0 text-base-content/40 transition-transform duration-200 group-open:rotate-180"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <p class="mt-3 text-base-content/60 text-sm leading-relaxed">
+            {faq.answer}
+          </p>
+        </details>
+      ))}
+    </div>
+
+    <p class="mt-8 text-xs text-base-content/30 leading-relaxed">
+      Always consult a qualified physician or healthcare provider before beginning any new exercise program. FORGED programs are for informational purposes only and are not a substitute for professional medical advice.
+    </p>
   </section>
 
 </BaseLayout>

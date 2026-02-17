@@ -99,13 +99,38 @@ const breadcrumbs = [
   { label: monthSlug, href: monthHref },
   { label: `Day ${dayNumber}` },
 ];
+
+const siteBase = Astro.site
+  ? new URL(import.meta.env.BASE_URL || "/", Astro.site).href.replace(/\/$/, "")
+  : "";
+
+const dayDescription = (entry.data as any).focus || `Day ${dayNumber} of the ${monthTitle} workout program. Progressive overload training for intermediate lifters.`;
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: entry.data.title,
+  description: dayDescription,
+  url: `${siteBase}/workouts/${monthSlug}/day${dayNumber}/`,
+  isPartOf: {
+    "@type": "CollectionPage",
+    name: monthTitle,
+    url: `${siteBase}/workouts/${monthSlug}/`,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "FORGED",
+    url: `${siteBase}/`,
+  },
+};
 ---
 
 <BaseLayout
   title={`${entry.data.title} - ${monthTitle}`}
-  description={entry.data.focus || `Day ${dayNumber} of ${monthTitle} workout program`}
+  description={dayDescription}
   breadcrumbs={breadcrumbs}
-  class="bg-base-100"
+  ogType="article"
+  schema={articleSchema}
 >
   <div class="max-w-3xl mx-auto px-4 lg:px-8 py-8 sm:py-10">
     <!-- Day Header -->
