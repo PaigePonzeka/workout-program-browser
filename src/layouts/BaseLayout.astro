@@ -72,6 +72,12 @@ const allSchemas: Record<string, unknown>[] = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="oklch(0.65 0.2 25)" />
+
+    <!-- Google Fonts — preconnect first, then stylesheet to avoid render-blocking @import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Outfit:wght@300;400;500;600;700;800&display=swap" />
 
     <!-- Primary SEO -->
     <title>{fullTitle}</title>
@@ -85,6 +91,8 @@ const allSchemas: Record<string, unknown>[] = [
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={`${siteName} — Workout Programs`} />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content="en_US" />
