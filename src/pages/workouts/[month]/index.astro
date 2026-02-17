@@ -74,12 +74,32 @@ const breadcrumbs = [
   { label: "Workouts", href: "/workouts" },
   { label: monthSlug },
 ];
+
+const siteBase = Astro.site
+  ? new URL(import.meta.env.BASE_URL || "/", Astro.site).href.replace(/\/$/, "")
+  : "";
+
+const pageDescription = (monthEntry.data as any).goal || `Structured workout program for ${monthSlug}. Follow along with progressive overload and periodization principles.`;
+
+const collectionPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: monthEntry.data.title,
+  description: pageDescription,
+  url: `${siteBase}/workouts/${monthSlug}/`,
+  isPartOf: {
+    "@type": "WebSite",
+    name: "FORGED",
+    url: `${siteBase}/`,
+  },
+};
 ---
 
 <BaseLayout
   title={`${monthEntry.data.title} - ${monthSlug}`}
-  description={monthEntry.data.goal || `Workout program for ${monthSlug}`}
+  description={pageDescription}
   breadcrumbs={breadcrumbs}
+  schema={collectionPageSchema}
 >
   <!-- Month Navigation -->
   <div class="bg-base-200 py-2">
