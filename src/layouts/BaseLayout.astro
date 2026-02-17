@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { getUrl } from "@/utils/url";
 
 interface Props {
   title: string;
@@ -162,7 +163,7 @@ const allSchemas: Record<string, unknown>[] = [
               {breadcrumbs.map((crumb) => (
                 <li>
                   {crumb.href ? (
-                    <a href={crumb.href} class="text-base-content/60 hover:text-primary transition-colors">{crumb.label}</a>
+                    <a href={getUrl(crumb.href)} class="text-base-content/60 hover:text-primary transition-colors">{crumb.label}</a>
                   ) : (
                     <span class="text-base-content/80 font-medium">{crumb.label}</span>
                   )}
