@@ -8,7 +8,7 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: 'https://paigeponzeka.github.io',
   base: '/workout-program-browser',
-  integrations: [mdx(), sitemap()],
+  integrations: [mdx(), sitemap({ filter: (page) => !page.includes('/404') })],
   vite: {
     plugins: [
       // @ts-ignore - Fix type mismatch

@@ -105,6 +105,13 @@ const siteBase = Astro.site
   ? new URL(import.meta.env.BASE_URL || "/", Astro.site).href.replace(/\/$/, "")
   : "";
 
+// Derive publication date from the month slug (e.g. "2026-02" → "2026-02-01")
+const datePublished = `${monthSlug}-01`;
+
+// Prev/next day numbers for <link rel> tags
+const prevDayNum = prevDay?.id.match(/day(\d+)\.md$/)?.[1];
+const nextDayNum = nextDay?.id.match(/day(\d+)\.md$/)?.[1];
+
 // Keyword-rich meta description for SEO and AIO
 const dayDescription = `${entry.data.title} — Day ${displayDay} of the ${monthTitle} workout program. A 45–60 minute functional fitness session with strength work and metabolic conditioning. Part of FORGED's free monthly training programs built on progressive overload.`;
 
@@ -121,6 +128,7 @@ const exercisePlanSchema = {
     maxValue: 60,
     unitCode: "MIN",
   },
+  datePublished,
   activityFrequency: "Once per training day",
   exerciseType: "Functional Fitness",
   intensity: "Moderate to High",
@@ -145,6 +153,7 @@ const articleSchema = {
   headline: `${entry.data.title} — Day ${displayDay} Workout`,
   description: dayDescription,
   url: `${siteBase}/workouts/${monthSlug}/day${dayNumber}/`,
+  datePublished,
   isPartOf: {
     "@type": "CollectionPage",
     name: monthTitle,
@@ -165,6 +174,9 @@ const articleSchema = {
   ogType="article"
   schema={[exercisePlanSchema, articleSchema]}
 >
+  {prevDayNum && <link slot="head" rel="prev" href={`${siteBase}/workouts/${monthSlug}/day${prevDayNum}/`} />}
+  {nextDayNum && <link slot="head" rel="next" href={`${siteBase}/workouts/${monthSlug}/day${nextDayNum}/`} />}
+
   <div class="max-w-3xl mx-auto px-4 lg:px-8 py-8 sm:py-10">
 
     <!-- Day Header -->
