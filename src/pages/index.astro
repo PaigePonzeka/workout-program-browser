@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import MonthCard from "../components/MonthCard.astro";
+import MailerLiteForm from "../components/MailerLiteForm.astro";
+import HowItWorks from "../components/HowItWorks.astro";
 import { getCollection } from "astro:content";
 import { getUrl } from "../utils/url";
 
@@ -170,6 +172,12 @@ const faqSchema = {
       </div>
     </div>
   </section>
+
+  <!-- ─── How It Works ─── -->
+  <HowItWorks />
+
+  <!-- ─── Newsletter Signup ─── -->
+  <MailerLiteForm />
 
   <!-- ─── Programs Listing ─── -->
   <section id="programs" class="max-w-5xl mx-auto px-4 lg:px-8 py-12 sm:py-16">

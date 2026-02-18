@@ -1,0 +1,70 @@
+---
+import { Sparkles, Smartphone, Mail } from "@lucide/astro";
+
+const steps = [
+  {
+    icon: Sparkles,
+    step: "01",
+    title: "AI Builds the Program",
+    description:
+      "Every month, AI generates a free workout program using the same tested strategies used by fitness professionals and expensive gyms — periodization, progressive overload, and balanced movement patterns.",
+  },
+  {
+    icon: Smartphone,
+    step: "02",
+    title: "Just Show Up",
+    description:
+      "Programs are free and accessible straight from your phone. No app, no login, no paywall. Open the site, find today's workout, and get to work. It's that simple.",
+  },
+  {
+    icon: Mail,
+    step: "03",
+    title: "Get It in Your Inbox",
+    description:
+      "Subscribe for free and get each new monthly program delivered directly to your inbox the moment it drops — so you never have to wonder what's next.",
+  },
+];
+---
+
+<section class="max-w-5xl mx-auto px-4 lg:px-8 py-12 sm:py-20">
+
+  <!-- Header -->
+  <div class="text-center mb-12 sm:mb-16">
+    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight" style="font-family: 'Outfit', sans-serif;">
+      How It Works
+    </h2>
+    <p class="text-sm text-base-content/50 mt-1">Free, simple, and built for real training.</p>
+  </div>
+
+  <!-- Steps grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6 lg:gap-10 relative">
+
+    <!-- Dashed connector line (desktop only) -->
+    <div class="hidden sm:block absolute top-8 left-[calc(33.333%+1rem)] right-[calc(33.333%+1rem)] h-px border-t-2 border-dashed border-base-300 z-0"></div>
+
+    {steps.map(({ icon: Icon, step, title, description }) => (
+      <div class="flex flex-col items-center text-center gap-4 relative z-10">
+
+        <!-- Icon bubble -->
+        <div class="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+          <Icon class="w-7 h-7" stroke-width={1.75} />
+        </div>
+
+        <!-- Step label + content -->
+        <div>
+          <p class="text-xs font-bold text-primary uppercase tracking-widest mb-1.5">
+            Step {step}
+          </p>
+          <h3 class="text-lg font-bold leading-snug mb-2" style="font-family: 'Outfit', sans-serif;">
+            {title}
+          </h3>
+          <p class="text-sm text-base-content/60 leading-relaxed">
+            {description}
+          </p>
+        </div>
+
+      </div>
+    ))}
+  </div>
+
+</section>
