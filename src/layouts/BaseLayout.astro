@@ -9,6 +9,8 @@ interface Props {
   ogType?: "website" | "article";
   ogImage?: string;
   schema?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
+  preloadImage?: string;
 }
 
 const {
@@ -18,6 +20,8 @@ const {
   ogType = "website",
   ogImage,
   schema,
+  noindex = false,
+  preloadImage,
 } = Astro.props;
 
 const currentYear = new Date().getFullYear();
@@ -79,11 +83,17 @@ const allSchemas: Record<string, unknown>[] = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Outfit:wght@300;400;500;600;700;800&display=swap" />
 
+    <!-- Preload LCP image if provided by the page -->
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
+
     <!-- Primary SEO -->
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
     <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Page-level <head> additions (e.g. rel=prev/next) -->
+    <slot name="head" />
 
     <!-- Open Graph -->
     <meta property="og:type" content={ogType} />
@@ -197,7 +207,7 @@ const allSchemas: Record<string, unknown>[] = [
             <span class="font-semibold tracking-tight" style="font-family: 'Outfit', sans-serif;">FORGED</span>
           </div>
           <p class="text-sm text-base-content/50">
-            &copy; {currentYear} FORGED. AI-powered workout programming.
+            &copy; {currentYear} FORGED. AI-powered workout programming. Built by <a href="https://www.ponzeka.com" class="hover:text-primary transition-colors underline underline-offset-2" target="_blank" rel="noopener noreferrer">Paige Ponzeka</a>.
           </p>
         </div>
       </div>

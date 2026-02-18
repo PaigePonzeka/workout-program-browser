@@ -78,6 +78,9 @@ const siteBase = Astro.site
   ? new URL(import.meta.env.BASE_URL || "/", Astro.site).href.replace(/\/$/, "")
   : "";
 
+// Derive publication date from the month slug (e.g. "2026-02" → "2026-02-01")
+const datePublished = `${monthSlug}-01`;
+
 // Keyword-rich meta description for SEO and AIO
 const pageDescription = `${monthTitle} — a free ${days.length}-session functional fitness program from FORGED. Built on progressive overload and periodization with Push, Pull, Full Body, and Engine workouts. 45–60 minutes per session.`;
 
@@ -94,6 +97,7 @@ const courseSchema = {
     name: "FORGED",
     url: `${siteBase}/`,
   },
+  datePublished,
   educationalLevel: "Intermediate",
   isAccessibleForFree: true,
   hasPart: days.map(day => {
@@ -126,6 +130,7 @@ const articleSchema = {
   headline: `${monthTitle} — Free ${days.length}-Session Workout Program`,
   description: pageDescription,
   url: `${siteBase}/workouts/${monthSlug}/`,
+  datePublished,
   publisher: {
     "@type": "Organization",
     name: "FORGED",
