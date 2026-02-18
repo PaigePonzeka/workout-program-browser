@@ -146,3 +146,23 @@ h1, h2, h3, h4, h5, h6 {
 [id] {
   scroll-margin-top: 5rem;
 }
+
+.ml-form-embedWrapper.embedForm {
+  background-color: transparent !important;
+}
+
+.ml-form-embedWrapper.embedForm h4, 
+.ml-form-embedWrapper.embedForm .ml-form-embedContent > p {
+  display: none; 
+}
+
+body #mlb2-37311057.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-horizontalRow button {
+  background-color: unset !important;
+}
+
+#mlb2-37311057.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedPermissions .ml-form-embedPermissionsContent.privacy-policy p {
+  font-family: unset !important;
+  color: var(--color-base-content);
+}
+  
+
