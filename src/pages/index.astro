@@ -201,9 +201,8 @@ const faqSchema = {
             title={month.data.title || displayDate}
             monthSlug={month.data.monthSlug}
             phase={month.data.title || displayDate}
-            goal={month.data.title ? `Workout program for ${displayDate}` : `Monthly workout program for ${displayDate}`}
+            goal={month.data.description || ''}
             split="Full Body"
-            totalDays={4} // Default to 4 weeks
             startDate={month.data.monthSlug || displayDate}
             featured={index === 0}
           />
