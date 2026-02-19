@@ -1,6 +1,5 @@
 ---
 title: "Glacial Grip & Rip"
-slug: "day2"
 ---Ice-cold pull workout hammering back, biceps, and grip. Builds foundational strength and muscular endurance, setting you up for the program’s arctic conditioning later in the week.
   ## Warm-Up
 

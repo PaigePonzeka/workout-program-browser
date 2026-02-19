@@ -1,6 +1,5 @@
 ---
 title: "Blizzard Legs Bonanza"
-slug: "day3"
 ---Leg-dedicated day to freeze-fat in your quads, glutes, and hamstrings and keep your lower body strong for adventure—all with glacial focus and intention.
   ## Warm-Up
 

@@ -1,6 +1,5 @@
 ---
 title: "Polar Press Party"
-slug: "day1"
 ---A push-focused workout to boost pressing strength and power, warming up your upper body for February’s frosty challenges.
   ## Warm-Up
 5 min bike or rower

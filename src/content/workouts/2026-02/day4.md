@@ -1,6 +1,5 @@
 ---
 title: "Chill Factor Full-Body"
-slug: "day5"
 ---A refreshing end-of-week session blending push, pull, and athletic movement to round out the wintery gains and ensure balanced muscle and calorie burn.
   ## Warm-Up
 

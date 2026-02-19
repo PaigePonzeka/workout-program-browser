@@ -1,6 +1,5 @@
 ---
 title: "Frosty Full-Body Finale"
-slug: "day5"
 ---A fun, snowball-style full body day combining upper, lower, and core, rounding out the week with metabolic work that still leaves legs fresh.
   ## Warm-Up
 5 min ski erg or jump rope
