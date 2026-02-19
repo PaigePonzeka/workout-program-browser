@@ -1,6 +1,5 @@
 ---
 title: "Shiver Me Timbers (Engine Day)"
-slug: "day4"
 ---Wind-chill engine circuit to ramp up fat loss and aerobic fitness, mixing classic snowy bodyweight and monostructural moves for scalable, high-energy fun.
   ## Warm-Up
 

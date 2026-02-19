@@ -1,6 +1,5 @@
 ---
 title: "Blizzard Burnout"
-slug: "day4"
 ---A heart-thawing Engine Day for melting fat using winter-themed cardio and bodyweight moves. Ignite your inner fire!
   ## Warm-Up
 5 min jog or row

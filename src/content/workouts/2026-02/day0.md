@@ -1,6 +1,5 @@
 ---
 title: "Polar Push Party"
-slug: "day1"
 ---A frosty push day firing up the chest, shoulders, and triceps with classic presses and a blizzard-blast finisher. Sets the tone for the program’s icy theme and freezes in pressing strength early.
   ## Warm-Up
 

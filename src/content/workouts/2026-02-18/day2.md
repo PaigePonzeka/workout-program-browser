@@ -1,6 +1,5 @@
 ---
 title: "Icy Quads Quest"
-slug: "day3"
 ---This lower body day builds powerful legs even in the deepest February freeze, combining squats with posterior chain action for strength and definition.
   ## Warm-Up
 5 min brisk walk or jog

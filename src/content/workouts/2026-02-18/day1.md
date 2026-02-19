@@ -1,6 +1,5 @@
 ---
 title: "Snow Plow Pulls"
-slug: "day2"
 ---Dedicated to building major upper back and arm strength, this pull session clears the way for better posture and grip—perfect for surviving icy days.
   ## Warm-Up
 5 min treadmill or ski erg

@@ -244,8 +244,8 @@ const articleSchema = {
         <div class="grid gap-4 sm:grid-cols-2">
           {days.map((day) => {
             const dayNum = day.id.match(/day(\d+)\.md$/)?.[1] || '0';
-            const displayNum = parseInt(dayNum, 10) + 1;
-            const dayTitle = day.data.title || `Day ${displayNum}`;
+            const displayNum = parseInt(dayNum, 10);
+            const dayTitle = day.data.title || `Day ${displayNum + 1}`;
             return (
               <a
                 href={getUrl(`workouts/${monthSlug}/day${dayNum}`)}
