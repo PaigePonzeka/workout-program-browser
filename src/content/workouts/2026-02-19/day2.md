@@ -1,6 +1,5 @@
 ---
 title: "Glacial Gains"
-slug: "undefined"
 ---Turn up the heat in your legs with frozen-solid focus: squats, hinges, and unilateral strength, forging resilience for winter terrain.
   ## Warm-Up
 

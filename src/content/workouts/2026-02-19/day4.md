@@ -1,6 +1,5 @@
 ---
 title: "Full-Body: The Yeti's Circuit"
-slug: "undefined"
 ---A playful but potent full-body blend—this day maintains total-body strength while letting the legs chill, so you're ready for more frosty work next week.
   ## Warm-Up
 

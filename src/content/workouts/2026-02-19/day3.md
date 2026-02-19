@@ -1,6 +1,5 @@
 ---
 title: "Engine: Icy Interval Insanity"
-slug: "undefined"
 ---Mixed-modal cardio and bodyweight engine circuit to build cold-weather capacity and stamina—no heavy barbells needed but plenty of sweat!
   ## Warm-Up
 

@@ -1,6 +1,5 @@
 ---
 title: "Snowdrift Sled Pull"
-slug: "undefined"
 ---This back-and-biceps blast stays chilly with horizontal pulls and grip work, sculpting a strong sled-dog physique to build upper-body muscle and fuel metabolic conditioning.
   ## Warm-Up
 
