@@ -20,6 +20,9 @@ export default defineConfig({
   build: {
     format: "directory"
   },
+  server: {
+    open: true,
+  },
   // Explicitly define routes for better control
   routes: [
     {
