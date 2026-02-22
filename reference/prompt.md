@@ -138,6 +138,7 @@ For every Metcon:
 ## Output Type  
 - Output must be **valid JSON only**  
 - No preamble, explanation, or Markdown fences  
+- Use the month and Year this workout was created for the programming ID. Today's Month and Year is 2026-02-Feb 21, 2026
 
 ## Top-Level Structure  
 ```json  
@@ -149,7 +150,7 @@ For every Metcon:
 
 ## Programming - Required Fields  
 - `programming.id` *(string)*  
-  - Format: `YYYY-MM`  
+  - Format: `yyyy-MM-DD`
   - Year and month must match generation date  
   - Timestamp must be numeric (Unix epoch recommended)  
 - `programming.name` *(string)*  
@@ -163,9 +164,7 @@ For every Metcon:
 - `week.workouts` *(array, length 4 or 5 only)*  
 
 ---  
-## Workout Object  
-- `workout.slug` *(string)*: `day1`–`day5`  
-  - Sequential, no gaps  
+## Workout Object   
 - `workout.name` *(string)*: fun, themed name  
 - `workout.description` *(string)*: goal + theme alignment  
 - `workout.programming` *(string)*: Markdown content  
@@ -212,7 +211,7 @@ Inside `## Coaching Notes`, include:
 ```json
 {
   "programming": {
-    "id": "2026-02",
+    "id": "2026-02-04",
     "name": "Galactic Gains",
     "description": "A 4-week space-themed program combining strength-building compound lifts with high-intensity metabolic conditioning. Each week progressively increases volume and intensity while maintaining the cosmic theme throughout exercise selection and workout naming.",
     "weeks": [

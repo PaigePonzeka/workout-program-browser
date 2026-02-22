@@ -1,6 +1,8 @@
 ---
 title: "Blizzard Burnout"
----A heart-thawing Engine Day for melting fat using winter-themed cardio and bodyweight moves. Ignite your inner fire!
+dayNumber: 3
+---
+A heart-thawing Engine Day for melting fat using winter-themed cardio and bodyweight moves. Ignite your inner fire!
   ## Warm-Up
 5 min jog or row
 Then:
@@ -18,9 +20,11 @@ Then:
 Scaling: Use lighter wall ball, lower box, reduce reps on sit-ups
 
 ## Cool-Down
-- Forward fold: 1 min
-- Seated hamstring stretch: 1 min/side
-- Kneeling hip flexor stretch: 1 min/side
+- Kneeling hip flexor stretch: 60 sec/side
+- Standing hamstring forward fold: 60 sec
+- Seated hamstring stretch: 60 sec/side
+- Supine figure-4 glute stretch: 45 sec/side
+- Supine spinal twist: 45 sec/side
 
 ## Core / Optional Finisher
 1 set for quality:
@@ -28,10 +32,9 @@ Scaling: Use lighter wall ball, lower box, reduce reps on sit-ups
 - 20 alternating heel taps
 
 ## Coaching Notes
-Keep pace steady. Focus on quick transitions. Don’t rush box jumps—land softly.
+Keep pace steady. Focus on quick transitions. Don't rush box jumps—land softly.
 ### Week-over-Week Progression
 - Week 1: 20 min AMRAP as written
 - Week 2: Increase wall balls to 20 reps/round
 - Week 3: Use heavier wall ball, try to increase rounds by 1 over last best
 - Week 4: Keep wall balls high, focus on consistency—deload intensity if needed
-  

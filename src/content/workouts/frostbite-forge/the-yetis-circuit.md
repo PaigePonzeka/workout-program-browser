@@ -1,6 +1,8 @@
 ---
 title: "Full-Body: The Yeti's Circuit"
----A playful but potent full-body blend—this day maintains total-body strength while letting the legs chill, so you're ready for more frosty work next week.
+dayNumber: 4
+---
+A playful but potent full-body blend—this day maintains total-body strength while letting the legs chill, so you're ready for more frosty work next week.
   ## Warm-Up
 
 5 min mixed erg or jump rope
@@ -26,9 +28,11 @@ Scaling: Reduce KB weight, step-ups for jumps
 
 ## Cool-Down
 
-- Thread the needle stretch: 45 sec/side
-- Standing quad stretch: 30 sec/side
-- Pigeon pose: 45 sec/side
+- Thread the needle (thoracic rotation/upper back): 45 sec/side
+- Doorway pec stretch: 45 sec/side
+- Cross-body rear delt stretch: 45 sec/side
+- Standing quad stretch: 45 sec/side
+- Pigeon pose: 60 sec/side
 
 ## Core / Optional Finisher
 
@@ -43,4 +47,3 @@ Keep tempo on both push and pull in each superset. Conditioning should feel bris
 - Week 2: 5 rounds add load, 16min AMRAP (add 2 reps press/rd)
 - Week 3: 5 rounds (heaviest), 14min AMRAP (increase KB or box height)
 - Week 4: 4 rounds deload, 12min AMRAP moderate load
-  

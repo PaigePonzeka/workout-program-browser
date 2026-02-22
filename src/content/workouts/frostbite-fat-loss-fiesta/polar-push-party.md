@@ -1,6 +1,8 @@
 ---
 title: "Polar Push Party"
----A frosty push day firing up the chest, shoulders, and triceps with classic presses and a blizzard-blast finisher. Sets the tone for the program’s icy theme and freezes in pressing strength early.
+dayNumber: 0
+---
+A frosty push day firing up the chest, shoulders, and triceps with classic presses and a blizzard-blast finisher. Sets the tone for the program's icy theme and freezes in pressing strength early.
   ## Warm-Up
 
 5 min steady bike or row
@@ -31,8 +33,10 @@ Scaling: Incline push-ups or from knees; snatch with lighter DB; substitute taps
 
 ## Cool-Down
 
-- Doorway chest stretch: 60 sec/side
+- Doorway pec stretch: 60 sec/side
 - Overhead triceps stretch: 45 sec/side
+- Cross-body shoulder stretch: 45 sec/side
+- Prone shoulder opener (arm extended palm-down, rotate torso away): 45 sec/side
 - Child's pose: 1 min
 
 ## Core / Optional Finisher
@@ -50,4 +54,3 @@ Control every press's descent and keep elbows at 45°. Metcon should keep you mo
 - Week 2: Increase by 5 lbs (or 1 rep per set), 16 min AMRAP
 - Week 3: 5x5 bench @ heavier load, 12 min AMRAP
 - Week 4: 3x8 @ 80% of Week 3 (deload), 10 min AMRAP
-  

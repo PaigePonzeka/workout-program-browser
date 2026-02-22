@@ -1,0 +1,414 @@
+{
+  "name": "Forged - Workout Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=## Purpose  \nThis document defines **binding instructions** for how an AI must generate structured, safe, and effective gym-based fitness programs\n\n# Role & Goal  \nYou are a CrossFit-style personal trainer AI.  \nYour job is to design a 5-day/week program for the current month.\n\nThe intended trainee is **intermediate**, training in a **commercial or home gym**, with a primary goal of **fat loss and conditioning** while maintaining strength and muscle. \n\n## Available Equipment (Assume present)  \n- Barbell + plates  \n- Dumbbells (5-50+ lbs)  \n- Kettlebells  \n- Pull-up bar  \n- Boxes  \n- Bench  \n- Bike/rower/ski erg/treadmill/stairmaster (at least one)  \n- Bands  \n- Lat Pull down\n\n## Not Available  \n- Specialized machines (leg press, hack squat, etc.)  \n- GHD  \n- Rings\n\n# Overall Objective  \n- Build a 4-week CrossFit-style training program  \n- Respect balanced workout programming and recovery  \n- Prioritize safe, sustainable progression in strength and conditioning  \n- Prioritize healthy movements and good form and standards   \n- Prioritize a healthy body, strength building and weight loss\n\n## Each 4-week program must have:  \n* A **clearly defined theme or training focus**  \n  * The theme reflected in:  \n    * Program name  \n    * Program description  \n    * Conditioning style  \n    * Progression strategy  \n- Programming naming scheme can follow any theme: space, halloween, animals, nature etc... but that theme must be honored throughout the rest of the naming scheme for the workouts\n\n## Fixed Programming Profile (Do Not Ask)  \nUnless explicitly instructed otherwise, the AI must assume the following profile and **must not ask clarifying questions**:  \n- **Training Level**: Intermediate  \n- **Primary Goal**: Fat Loss / Conditioning  \n- **Training Frequency**: 4-5 days per week  \n- **Session Length**: 45-60 minutes  \n- **Training Environment**: Commercial gym or home gym  \n- **Injuries or Limitations**: None  \n  \n## Weekly Training Split (5 days/week)  \n- 1 Day: Push (chest, shoulders, triceps)  \n- 1 Day: Pull (back, biceps, grip)  \n- 1 Day: Lower Body/Legs (quads, hamstrings, glutes)  \n- 1 Day: Conditioning/Engine  \n- 1 Day: Rotates between Full Body and additional Conditioning based on weekly volume\n\n### Try to:  \n- Keep at least 1 rest day between heavy lower sessions and conditioning that heavily taxes legs  \n- Engine/Conditioning must not immediately precede **Leg Day** unless purely aerobic  \n- Full Body day must avoid maximal lower-body loading\n\n## Workout Design Standards  \nEach session should have the following parts:  \n- Every workout must define how it progresses Week over Week  \n  \n### Workout Naming (Style Preference)  \nEach workout should include:  \n- A **fun, lighthearted name**  \n- Preference for **alliteration or dad-joke energy**  \n- Name should try to honor the program theme  \n- Theme should ideally reference the body parts being worked out, but that isn't required  \n  \n### Workout Description (Hard Rule)  \n- Each workout must include a **1-2 sentence description** stating:  \n  - The workout's primary goal  \n  - How it supports the cycle theme\n\n### Warm-Up (5-10 min)  \n- General cardio: row, bike, or jump rope  \n- Dynamic mobility for target muscle groups  \n- Activation (e.g., band pull-aparts, glute bridges, scap push-ups)  \n- You may program this as a short circuit \"for quality\" or for time\n\n### **Strength or Skill (15-25 min)**  \n- Can include compound or Olympic lifts based on available equipment  \n- Examples: squats, deadlifts, presses, lat pull-downs, bench, rows, etc.\n\nInclude:  \n- Sets, reps, and loading guidance (percentages or RPE)  \n- Progression from week to week (more load, more reps, or more sets)\n\n### Metcon (15-20 min)  \n- High-intensity conditioning combining strength + cardio  \n- Use varied formats across the week, such as:  \n  - AMRAP (As Many Rounds as Possible)  \n  - EMOM (Every Minute on the Minute)  \n  - Chipper (complete all reps)  \n  - Buy-in/cash-out workouts (e.g., run or row buy-in)  \n\nFor every Metcon:  \n- Provide a time cap if relevant  \n- Provide scaling options (easier/harder versions)  \n- Time cap guidance:  \n  - AMRAP: 10-20 min typical   \n  - EMOM: 12-20 min typical   \n  - Chipper: 15-25 min cap   \n  - Buy-in/Cash-out: 20-30 min cap  \n\n### EMOM Formatting Rule\nWhen writing EMOM workouts, each minute MUST be a Markdown bullet-list item:\n- Minute 1: [exercise]\n- Minute 2: [exercise]\n- Minute 3: [exercise]\nDo NOT write minute entries as plain text lines — they must start with `- `.  \n\n### Cool-Down (5-10 min)  \n- Static stretches for the muscles worked that day  \n- Light mobility and breathing work  \n- Suggest 2-3 specific stretches and durations\n\n### Notes:  \n- Always prefer free weights and compound movements when possible  \n- First, design a 4-week overview (what each day roughly focuses on)  \n- Give scaling options for load, reps, or movement substitutions based on skill and ability  \n- Substitutions can only be allowed and noted if movement pattern is preserved and skill and fatigue demands are equal or lower  \n- Engine Days must not include maximal lifts or technical barbell movements  \n\n### Engine Day Guidelines\n\n**Engine Day CAN include:**  \n- Bodyweight movements (burpees, air squats, push-ups)   \n- Light DB/KB work (thrusters, snatches, swings)   \n- Monostructural cardro (row, bike, run, ski)   \n- Wall balls, box jumps, rope work   \n\n**Engine Day CANNOT include:**   \n- Barbell lifts over 60% 1RM  \n- Technical Olympic lifts (snatches, cleans from floor)   \n- Max effort deadlifts, squats, or presses \n\n### Gymnastics & Accessibility Rule\n- Do NOT program pull-ups, muscle-ups, toes-to-bar, handstand push-ups, rope climbs, or other gymnastics movements as primary exercises\n- For vertical pulling, rotate between: lat pull-downs (various grips), banded lat pull-downs (kneeling or standing), straight-arm pull-downs\n- For horizontal pulling, rotate between: barbell rows, single-arm dumbbell rows, kettlebell rows, inverted barbell rows (bar in rack)\n- Vary the pulling exercises across the week — do not repeat the same substitute in every workout\n- If a gymnastics movement is mentioned for variety, always provide a beginner-friendly alternative as the DEFAULT, and list the gymnastics version as an optional advanced progression\n- Scaling options must always include a non-gymnastics alternative\n\n---  \n# Output Format Requirements (Hard Rule)  \n\n## Output Type  \n- Output must be **valid JSON only**  \n- No preamble, explanation, or Markdown fences  \n- Use the month and Year this workout was created for the programming ID. Today's Month and Year is {{ $now.format('yyyy-MM-DD')}}\n\n## Top-Level Structure  \n```json  \n{  \n  \"programming\": { }  \n}  \n```  \n---\n\n## Programming - Required Fields  \n- `programming.id` *(string)*  \n  - Format: `yyyy-MM-DD`\n  - Year and month must match generation date  \n  - Timestamp must be numeric (Unix epoch recommended)  \n- `programming.slug` *(string)* — URL-safe kebab-case slug derived from the program name (e.g., \"galactic-gains\"). Lowercase, hyphens only, no special characters.  \n- `programming.name` *(string)*  \n- `programming.description` *(string)*  \n  - Short paragraph describing intent and selected Engine style  \n- `programming.weeks` *(array, exactly 4)*  \n\n---  \n## Week - Required Fields  \n- `week.name` *(string)*: `Week 1`–`Week 4`  \n- `week.workouts` *(array, length 4 or 5 only)*  \n\n---  \n## Workout Object   \n- `workout.slug` *(string)* — URL-safe kebab-case slug derived from the workout name (e.g., \"meteor-mash-monday\"). Lowercase, hyphens only, no special characters.  \n- `workout.name` *(string)*: fun, themed name  \n- `workout.description` *(string)*: goal + theme alignment  \n- `workout.programming` *(string)*: Markdown content  \n\n---  \n## Workout Markdown Requirements  \nEach `workout.programming` string must include:\n\n* `## Warm-Up`\n* `## Strength or Skill` *(or just `## Metcon` for Engine day)*\n* `## Cool-Down`\n* `## Core / Optional Finisher`\n* `## Coaching Notes` *(must include Week-over-Week Progression subsection)*\n\nInside `## Coaching Notes`, include:\n\n```\n### Week-over-Week Progression\n- Week 1: [specific progression details]\n- Week 2: [specific progression details]\n- Week 3: [specific progression details]\n- Week 4: [specific progression details]\n```\n\n---  \n## JSON Validity Rules  \n* Must be valid JSON  \n* Double quotes only  \n* No trailing commas  \n* Newlines inside strings must be encoded as `\\n`  \n* Output must contain **JSON only**  \n\n---  \n## CRITICAL: Raw JSON Only  \n- Do NOT wrap output in ```json ``` fences  \n- Do NOT include any text before the opening {  \n- Do NOT include any text after the closing }  \n- First character of response: {  \n- Last character of response: }\n\n---  \n# Example JSON Output  \n\n```json\n{\n  \"programming\": {\n    \"id\": \"2026-02-04\",\n    \"slug\": \"galactic-gains\",\n    \"name\": \"Galactic Gains\",\n    \"description\": \"A 4-week space-themed program combining strength-building compound lifts with high-intensity metabolic conditioning. Each week progressively increases volume and intensity while maintaining the cosmic theme throughout exercise selection and workout naming.\",\n    \"weeks\": [\n      {\n        \"name\": \"Week 1\",\n        \"workouts\": [\n          {\n            \"slug\": \"meteor-mash-monday\",\n            \"name\": \"Meteor Mash Monday\",\n            \"description\": \"Push-focused strength session building chest and shoulder power with explosive pressing movements, supporting the program's foundation phase.\",\n            \"programming\": \"## Warm-Up\\n\\n5 min easy row\\n\\nThen 2 rounds:\\n- 10 band pull-aparts\\n- 10 scap push-ups\\n- 10 arm circles each direction\\n\\n## Strength or Skill\\n\\nBarbell Bench Press\\n- 4 sets x 8 reps @ RPE 7\\n- Rest 2-3 min between sets\\n\\nSeated Dumbbell Press\\n- 3 sets x 10 reps @ RPE 7\\n- Rest 90 sec\\n\\n## Metcon\\n\\n12 min AMRAP:\\n- 10 push-ups\\n- 15 kettlebell swings (53/35 lbs)\\n- 20 air squats\\n\\nScaling: reduce push-ups to knees, reduce KB weight\\n\\n## Cool-Down\\n\\n- Chest doorway stretch: 60 sec each side\\n- Overhead tricep stretch: 45 sec each arm\\n- Child's pose: 90 sec\\n\\n## Core / Optional Finisher\\n\\n3 rounds:\\n- 20 Russian twists\\n- 15 sec hollow hold\\n\\n## Coaching Notes\\n\\nFocus on controlled eccentric (lowering) phase on all pressing movements. Maintain tight core throughout.\\n\\n### Week-over-Week Progression\\n- Week 1: 4x8 bench @ RPE 7, 12 min AMRAP\\n- Week 2: 4x8 bench @ RPE 7.5 (add 5-10 lbs), 15 min AMRAP\\n- Week 3: 5x6 bench @ RPE 8, 12 min AMRAP (increase KB weight)\\n- Week 4: 4x8 bench @ RPE 6 (deload week), 10 min AMRAP\"\n          }\n        ]\n      }\n    ]\n  }\n}\n```\n\n---  \n## Guiding Principle  \nHave fun, keep workouts fresh"
+            }
+          ]
+        },
+        "simplify": false,
+        "builtInTools": {},
+        "options": {
+          "maxToolsIterations": 15,
+          "textFormat": {
+            "textOptions": {
+              "type": "json_object"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "5329862e-1d49-46ee-8a4f-3113ed5ee5d4",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ahsS1FcccldWywjU",
+          "name": "[Service Account] GenAI Accelerators - OpenAI API Credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const outputs = $input.first().json.output;\nvar programJson;\noutputs.map((output) => {\n  if (output.type === \"message\" && output.content) {\n    programJson = output.content[0].text;\n  }\n});\n\n\nreturn programJson;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        816,
+        16
+      ],
+      "id": "6e003ad6-cc99-4d70-a756-68ddc1071bd2",
+      "name": "Code in JavaScript",
+      "notesInFlow": true,
+      "notes": "Get the JSON from the API Response"
+    },
+    {
+      "parameters": {
+        "jsCode": "const programming = $input.first().json.programming;\n\nconsole.log(\"programming\", programming);\n\nconst slugify = (str) => str.toLowerCase()\n  .replace(/[\\u2018\\u2019']/g, '')\n  .replace(/[^a-z0-9]+/g, '-')\n  .replace(/^-|-$/g, '');\n\nconst programSlug = programming.slug || slugify(programming.name);\n\n// create the index.md markdown file\nconst createIndexPage = () => {\n  return `---\\ntitle: \"${programming.name}\"\\nmonthSlug: \"${programSlug}\"\\nstartDate: \"${programming.id}\"\\nfeatured: true\\n---\\n  ## Program Overview \\n  ${programming.description}\\n`;\n}\n\nconst createDayItem = (day, index) => {\n  return `---\\ntitle: \"${day.name}\"\\ndayNumber: ${index}\\n---\\n${day.description}\\n${day.programming}\\n`;\n}\n\nconst workoutsList = programming.weeks[0].workouts;\nvar dayListObject = workoutsList.map((workout, index) => {\n  return {\n    slug: workout.slug || slugify(workout.name),\n    content: createDayItem(workout, index)\n  };\n});\n\nconst indexPage = createIndexPage();\nreturn {\n  id: programSlug,\n  index: indexPage,\n  days: dayListObject\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1024,
+        16
+      ],
+      "id": "b7492d9e-a013-44b2-836e-1153f5f0a2b3",
+      "name": "Code in JavaScript1",
+      "notesInFlow": true,
+      "notes": "Convert JSON to Markdown. Index file uses program slug, each day uses workout slug. Days array contains objects with slug and content fields."
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.github.com/repos/PaigePonzeka/workout-program-browser/contents/src/content/workouts",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubOAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1232,
+        16
+      ],
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "List Existing Programs",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "WmNiNJVssePaSyjF",
+          "name": "GitHub account 8"
+        }
+      },
+      "notesInFlow": true,
+      "notes": "Fetch existing folder names from GitHub to check for slug collisions"
+    },
+    {
+      "parameters": {
+        "jsCode": "const existingFolders = $('List Existing Programs').first().json\n  .map(item => item.name);\n\nconst baseSlug = $('Code in JavaScript1').first().json.id;\nconst data = $('Code in JavaScript1').first().json;\n\nlet slug = baseSlug;\nlet suffix = 2;\nwhile (existingFolders.includes(slug)) {\n  slug = `${baseSlug}-${suffix}`;\n  suffix++;\n}\n\n// Pass through all data with the resolved slug\nreturn {\n  ...data,\n  id: slug\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        16
+      ],
+      "id": "f1e2d3c4-b5a6-7890-cdef-ab1234567890",
+      "name": "Resolve Unique Slug",
+      "notesInFlow": true,
+      "notes": "Ensure program slug is unique by appending -2, -3, etc. if a collision exists"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "value": "PaigePonzeka",
+          "mode": "list",
+          "cachedResultName": "PaigePonzeka",
+          "cachedResultUrl": "https://github.com/PaigePonzeka"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "workout-program-browser",
+          "mode": "list",
+          "cachedResultName": "workout-program-browser",
+          "cachedResultUrl": "https://github.com/PaigePonzeka/workout-program-browser"
+        },
+        "filePath": "=src/content/workouts/{{ $json.id }}/index.md",
+        "fileContent": "={{ $json.index }}",
+        "commitMessage": "=Adding program {{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        1984,
+        528
+      ],
+      "id": "3759634b-9f75-497a-a2be-82983a3fc51a",
+      "name": "Create a file",
+      "webhookId": "8ed0875e-66ab-4035-9256-9460add8bb1f",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "WmNiNJVssePaSyjF",
+          "name": "GitHub account 8"
+        }
+      },
+      "notes": "Add index File to the repository"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "days",
+        "options": {}
+      },
+      "id": "0a5975b5-2e27-43d7-b8f9-c3d2487365c1",
+      "name": "Split Out Days Array",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1968,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "dayContent",
+              "value": "={{ $json.days.content }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "daySlug",
+              "value": "={{ $json.days.slug }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "programId",
+              "value": "={{ $('Resolve Unique Slug').item.json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d9b86752-b1c6-4fe5-852a-30fea289bc7c",
+      "name": "Prepare Day File Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2192,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "mode": "list",
+          "value": "PaigePonzeka",
+          "cachedResultName": "PaigePonzeka",
+          "cachedResultUrl": "https://github.com/PaigePonzeka"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "list",
+          "value": "workout-program-browser",
+          "cachedResultName": "workout-program-browser",
+          "cachedResultUrl": "https://github.com/PaigePonzeka/workout-program-browser"
+        },
+        "filePath": "=src/content/workouts/{{ $json.programId }}/{{ $json.daySlug }}.md",
+        "fileContent": "={{ $json.dayContent }}",
+        "commitMessage": "=Adding {{ $json.daySlug }} for program {{ $json.programId }}"
+      },
+      "id": "2a6ac9ae-48bb-4b37-b690-0b86062df45b",
+      "name": "Create Day File",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        2416,
+        304
+      ],
+      "webhookId": "e173e4d0-cb61-4f24-acee-741b2862bd18",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "WmNiNJVssePaSyjF",
+          "name": "GitHub account 8"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -128,
+        144
+      ],
+      "id": "391a1c9f-2b58-47d9-9c2e-08e77f8f1f36",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "7JOANMTIn_scUdKIW6mCK",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/7JOANMTIn_scUdKIW6mCK",
+          "cachedResultName": "Forged - Mailer"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        2624,
+        304
+      ],
+      "id": "1df6721d-3a38-462c-8c1a-e474448008de",
+      "name": "Call 'Forged - Mailer'"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "List Existing Programs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Existing Programs": {
+      "main": [
+        [
+          {
+            "node": "Resolve Unique Slug",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resolve Unique Slug": {
+      "main": [
+        [
+          {
+            "node": "Create a file",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split Out Days Array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a file": {
+      "main": [
+        []
+      ]
+    },
+    "Split Out Days Array": {
+      "main": [
+        [
+          {
+            "node": "Prepare Day File Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Day File Data": {
+      "main": [
+        [
+          {
+            "node": "Create Day File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Day File": {
+      "main": [
+        [
+          {
+            "node": "Call 'Forged - Mailer'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "ed04687f-14aa-469f-87f7-2184a5cae753",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "eea14826bab32b5ebdcb784b0f31b6ed77e000103b7e54a7113e569c7f9815ae"
+  },
+  "id": "lwRwBjAP6rp5Bqg2i_Uzs",
+  "tags": []
+}

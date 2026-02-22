@@ -46,11 +46,11 @@ workout-program-browser/
 │   │       ├── index.astro    ← Month overview
 │   │       └── [day].astro    ← Individual workout day
 │   └── content/workouts/      ← ALL WORKOUT CONTENT LIVES HERE
-│       ├── feb-2026/
-│       │   ├── index.md       ← Month overview (type: "month")
-│       │   ├── day1.md        ← Day workout (type: "day")
+│       ├── frostbite-forge/
+│       │   ├── index.md       ← Program overview (monthSlug, startDate, featured)
+│       │   ├── polar-press-party.md  ← Day workout (dayNumber: 0)
 │       │   └── ...
-│       └── mar-2026/
+│       └── galactic-gains/
 │           └── ...
 ├── astro.config.mjs
 ├── tailwind.config.mjs        ← (if created)
@@ -70,12 +70,15 @@ npm run preview      # Preview production build locally
 ## 📝 Rules & Conventions
 
 ### Content Rules
-- **Month folders** use lowercase kebab-case: `feb-2026`, `mar-2026`, etc.
-- **Day files** are lowercase: `day1.md`, `day2.md`, etc. (sequential, no gaps)
-- **Month index** is always `index.md` with `type: "month"` in frontmatter
-- **Day files** always have `type: "day"` and a sequential `dayNumber`
+- **Month folders** use kebab-case program names: `frostbite-forge`, `galactic-gains`, etc.
+- **Day files** use kebab-case workout names: `polar-press-party.md`, `glacial-gains.md`, etc.
+- **Month index** is always `index.md` with `monthSlug` matching the folder name
+- **`monthSlug`** frontmatter = program slug (kebab-case program name, not a date)
+- **`startDate`** frontmatter = program start date in `YYYY-MM-DD` format
+- **`featured: true`** — only one program should have this at a time; controls the homepage hero CTA
+- **`dayNumber`** frontmatter = 0-indexed day ordering within the program
 - All frontmatter fields must match the Zod schema in `src/content.config.ts`
-- Day URLs resolve to `/workouts/{month-slug}/day{N}` (e.g., `/workouts/feb-2026/day1`)
+- Day URLs resolve to `/workouts/{program-slug}/{workout-slug}` (e.g., `/workouts/frostbite-forge/polar-press-party`)
 
 ### Code Rules
 - Use `@/` import alias for `src/` paths (configured in tsconfig.json)

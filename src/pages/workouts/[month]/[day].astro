@@ -9,20 +9,19 @@ export async function getStaticPaths() {
 
   // Process each day entry
   for (const entry of allWorkouts) {
-    // Skip non-day entries (should be in format '2024-06/day1.md')
-    if (!entry.id.match(/\/day\d+\.md$/)) continue;
+    // Skip index files
+    if (entry.id.endsWith('index.md')) continue;
+    // Skip entries without dayNumber frontmatter
+    if (entry.data.dayNumber === undefined) continue;
 
-    // Extract month and day info from the entry ID
+    // Extract month slug and file slug from the entry ID
     const parts = entry.id.split('/');
     const monthSlug = parts[0] === 'workouts' ? parts[1] : parts[0];
-    const dayMatch = entry.id.match(/day(\d+)\.md$/);
+    const fileSlug = entry.id.match(/\/([^/]+)\.md$/)?.[1] || '';
 
-    if (!dayMatch) continue;
+    if (!fileSlug) continue;
 
-    const dayNumber = parseInt(dayMatch[1], 10);
-    const daySlug = `day${dayNumber}`;
-
-    // Find the corresponding month entry (should be in the same directory)
+    // Find the corresponding month entry
     const monthEntry = allWorkouts.find(e =>
       e.id.endsWith(`${monthSlug}/index.md`)
     );
@@ -35,12 +34,12 @@ export async function getStaticPaths() {
     dayEntries.push({
       params: {
         month: monthSlug,
-        day: daySlug,
+        day: fileSlug,
       },
       props: {
         entryId: entry.id,
         monthSlug,
-        dayNumber
+        dayNumber: entry.data.dayNumber,
       },
     });
   }
@@ -74,14 +73,10 @@ if (!monthEntry) {
 // Get all days for this month for navigation
 const monthDays = allWorkouts
   .filter(e => {
-    const dayMatch = e.id.match(/day(\d+)\.md$/);
-    return dayMatch && e.id.includes(monthSlug);
+    const inMonth = e.id.includes(`${monthSlug}/`) && !e.id.endsWith('index.md');
+    return inMonth && e.data.dayNumber !== undefined;
   })
-  .sort((a, b) => {
-    const aDay = parseInt(a.id.match(/day(\d+)\.md$/)?.[1] || '0', 10);
-    const bDay = parseInt(b.id.match(/day(\d+)\.md$/)?.[1] || '0', 10);
-    return aDay - bDay;
-  });
+  .sort((a, b) => (a.data.dayNumber ?? 0) - (b.data.dayNumber ?? 0));
 
 const currentIndex = monthDays.findIndex(e => e.id === entryId);
 const prevDay = currentIndex > 0 ? monthDays[currentIndex - 1] : null;
@@ -105,12 +100,12 @@ const siteBase = Astro.site
   ? new URL(import.meta.env.BASE_URL || "/", Astro.site).href.replace(/\/$/, "")
   : "";
 
-// Derive publication date from the month slug (e.g. "2026-02" → "2026-02-01")
-const datePublished = `${monthSlug}-01`;
+// Derive publication date from startDate frontmatter or fall back to monthSlug
+const datePublished = monthEntry.data.startDate || monthSlug;
 
-// Prev/next day numbers for <link rel> tags
-const prevDayNum = prevDay?.id.match(/day(\d+)\.md$/)?.[1];
-const nextDayNum = nextDay?.id.match(/day(\d+)\.md$/)?.[1];
+// Prev/next file slugs for <link rel> tags
+const prevDaySlug = prevDay?.id.match(/\/([^/]+)\.md$/)?.[1];
+const nextDaySlug = nextDay?.id.match(/\/([^/]+)\.md$/)?.[1];
 
 // Keyword-rich meta description for SEO and AIO
 const dayDescription = `${entry.data.title} — Day ${displayDay} of the ${monthTitle} workout program. A 45–60 minute functional fitness session with strength work and metabolic conditioning. Part of FORGED's free monthly training programs built on progressive overload.`;
@@ -121,7 +116,7 @@ const exercisePlanSchema = {
   "@type": "ExercisePlan",
   name: entry.data.title,
   description: dayDescription,
-  url: `${siteBase}/workouts/${monthSlug}/day${dayNumber}/`,
+  url: `${siteBase}/workouts/${monthSlug}/${Astro.params.day}/`,
   activityDuration: {
     "@type": "QuantitativeValue",
     minValue: 45,
@@ -152,7 +147,7 @@ const articleSchema = {
   "@type": "Article",
   headline: `${entry.data.title} — Day ${displayDay} Workout`,
   description: dayDescription,
-  url: `${siteBase}/workouts/${monthSlug}/day${dayNumber}/`,
+  url: `${siteBase}/workouts/${monthSlug}/${Astro.params.day}/`,
   datePublished,
   isPartOf: {
     "@type": "CollectionPage",
@@ -174,8 +169,8 @@ const articleSchema = {
   ogType="article"
   schema={[exercisePlanSchema, articleSchema]}
 >
-  {prevDayNum && <link slot="head" rel="prev" href={`${siteBase}/workouts/${monthSlug}/day${prevDayNum}/`} />}
-  {nextDayNum && <link slot="head" rel="next" href={`${siteBase}/workouts/${monthSlug}/day${nextDayNum}/`} />}
+  {prevDaySlug && <link slot="head" rel="prev" href={`${siteBase}/workouts/${monthSlug}/${prevDaySlug}/`} />}
+  {nextDaySlug && <link slot="head" rel="next" href={`${siteBase}/workouts/${monthSlug}/${nextDaySlug}/`} />}
 
   <div class="max-w-3xl mx-auto px-4 lg:px-8 py-8 sm:py-10">
 
@@ -233,7 +228,7 @@ const articleSchema = {
         <div class="flex justify-between items-center">
           {prevDay ? (
             <a
-              href={getUrl(`workouts/${monthSlug}/day${prevDay.id.match(/day(\d+)\.md$/)?.[1] || ''}`)}
+              href={getUrl(`workouts/${monthSlug}/${prevDay.id.match(/\/([^/]+)\.md$/)?.[1] || ''}`)}
               class="btn btn-ghost btn-sm gap-1"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
@@ -243,7 +238,7 @@ const articleSchema = {
 
           {nextDay && (
             <a
-              href={getUrl(`workouts/${monthSlug}/day${nextDay.id.match(/day(\d+)\.md$/)?.[1] || ''}`)}
+              href={getUrl(`workouts/${monthSlug}/${nextDay.id.match(/\/([^/]+)\.md$/)?.[1] || ''}`)}
               class="btn btn-ghost btn-sm gap-1"
             >
               Next
@@ -270,11 +265,11 @@ const articleSchema = {
             .filter(day => day.id !== entryId)
             .slice(0, 4)
             .map(day => {
-              const dayNum = day.id.match(/day(\d+)\.md$/)?.[1] || '0';
-              const displayNum = parseInt(dayNum, 10) + 1;
+              const fileSlug = day.id.match(/\/([^/]+)\.md$/)?.[1] || '';
+              const displayNum = (day.data.dayNumber ?? 0) + 1;
               return (
                 <a
-                  href={getUrl(`workouts/${monthSlug}/day${dayNum}`)}
+                  href={getUrl(`workouts/${monthSlug}/${fileSlug}`)}
                   class="block p-4 rounded-lg border border-base-300 hover:border-primary/50 hover:shadow transition-all"
                 >
                   <div class="flex items-center justify-between gap-2 mb-1">

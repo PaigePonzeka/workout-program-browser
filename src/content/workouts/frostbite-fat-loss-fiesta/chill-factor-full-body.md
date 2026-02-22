@@ -1,6 +1,8 @@
 ---
 title: "Chill Factor Full-Body"
----A refreshing end-of-week session blending push, pull, and athletic movement to round out the wintery gains and ensure balanced muscle and calorie burn.
+dayNumber: 4
+---
+A refreshing end-of-week session blending push, pull, and athletic movement to round out the wintery gains and ensure balanced muscle and calorie burn.
   ## Warm-Up
 
 5 min brisk treadmill or ski erg
@@ -23,18 +25,20 @@ Lat Pull-Down
 ## Metcon
 
 "Winter WODderland" (15 min EMOM):
-Minute 1: 12 dumbbell snatch (alt, 35/25#)
-Minute 2: 10 goblet squats (50/35#)
-Minute 3: 15/12 cal row or bike
+- Minute 1: 12 dumbbell snatch (alt, 35/25#)
+- Minute 2: 10 goblet squats (50/35#)
+- Minute 3: 15/12 cal row or bike
 Repeat for 5 rounds
 
 Scaling: Lighter DB/KB; air squats; reduce calories
 
 ## Cool-Down
 
-- Lizard stretch: 45 sec/side
-- Door frame pec stretch: 1 min/side
+- Lizard stretch with rotation: 60 sec/side
+- Doorway pec stretch: 60 sec/side
+- Hanging lat stretch on bar: 30 sec x 2
 - Standing quad stretch: 45 sec/side
+- Child's pose: 1 min
 
 ## Core / Optional Finisher
 
@@ -51,4 +55,3 @@ Barbell cleans: form over load! Metcon EMOM: aim to finish each work set within 
 - Week 2: Add 5 lbs or 1 rep per set; maintain EMOM volume
 - Week 3: 6x3 cleans, switch squat to 12 reps, increase cal by 2
 - Week 4: 4x3 cleans @ deload (65% of Week 3), 10 min EMOM
-  

@@ -1,6 +1,8 @@
 ---
 title: "Shiver Me Timbers (Engine Day)"
----Wind-chill engine circuit to ramp up fat loss and aerobic fitness, mixing classic snowy bodyweight and monostructural moves for scalable, high-energy fun.
+dayNumber: 3
+---
+Wind-chill engine circuit to ramp up fat loss and aerobic fitness, mixing classic snowy bodyweight and monostructural moves for scalable, high-energy fun.
   ## Warm-Up
 
 5 min easy row, bike, or ski
@@ -21,9 +23,11 @@ Scaling: Step-ups instead of box jumps; DB push press for thrusters; reduce run/
 
 ## Cool-Down
 
-- Downward dog: 45 sec
-- World’s greatest stretch: 60 sec/side
-- Supine twist: 1 min/side
+- Downward dog: 60 sec
+- World's greatest stretch: 60 sec/side
+- Kneeling hip flexor stretch: 60 sec/side
+- Seated hamstring stretch: 60 sec/side
+- Supine spinal twist: 45 sec/side
 
 ## Core / Optional Finisher
 
@@ -39,4 +43,3 @@ Keep engine metcons at 75-85% max heart rate. Pacing is more important than all-
 - Week 2: Try for more rounds, or add 5 reps per movement
 - Week 3: Add a 100m run/row each round
 - Week 4: 15 min cap, aim for best possible pace—reduce volume for active recovery
-  

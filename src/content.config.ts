@@ -5,6 +5,9 @@ const workouts = defineCollection({
   schema: z.object({
     title: z.string(),
     monthSlug: z.string().optional(),
+    startDate: z.string().optional(),
+    featured: z.boolean().optional(),
+    dayNumber: z.number().optional(),
   }),
 });
 

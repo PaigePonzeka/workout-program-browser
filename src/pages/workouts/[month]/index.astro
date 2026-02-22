@@ -53,16 +53,13 @@ const currentIndex = monthEntries.findIndex(entry => entry.id === entryId);
 const prevMonth = currentIndex > 0 ? monthEntries[currentIndex - 1] : null;
 const nextMonth = currentIndex < monthEntries.length - 1 ? monthEntries[currentIndex + 1] : null;
 
-// Get day entries for this month, sorted by day number
+// Get day entries for this month, sorted by dayNumber frontmatter field
 const days = allWorkouts
   .filter(entry => {
-    const dayPattern = new RegExp(`(^|/)${monthSlug}/day(\\d+)\\.md$`);
-    return dayPattern.test(entry.id);
+    const inMonth = entry.id.includes(`${monthSlug}/`) && !entry.id.endsWith('index.md');
+    return inMonth && entry.data.dayNumber !== undefined;
   })
-  .sort((a, b) => {
-    const n = (id: string) => parseInt(id.match(/day(\d+)\.md$/)?.[1] || '0', 10);
-    return n(a.id) - n(b.id);
-  });
+  .sort((a, b) => (a.data.dayNumber ?? 0) - (b.data.dayNumber ?? 0));
 
 const { Content } = await monthEntry.render();
 
@@ -78,8 +75,8 @@ const siteBase = Astro.site
   ? new URL(import.meta.env.BASE_URL || "/", Astro.site).href.replace(/\/$/, "")
   : "";
 
-// Derive publication date from the month slug (e.g. "2026-02" → "2026-02-01")
-const datePublished = `${monthSlug}-01`;
+// Derive publication date from startDate frontmatter or fall back to monthSlug
+const datePublished = monthEntry.data.startDate || monthSlug;
 
 // Keyword-rich meta description for SEO and AIO
 const pageDescription = `${monthTitle} — a free ${days.length}-session functional fitness program from FORGED. Built on progressive overload and periodization with Push, Pull, Full Body, and Engine workouts. 45–60 minutes per session.`;
@@ -101,12 +98,12 @@ const courseSchema = {
   educationalLevel: "Intermediate",
   isAccessibleForFree: true,
   hasPart: days.map(day => {
-    const dayNum = day.id.match(/day(\d+)\.md$/)?.[1] || '0';
-    const displayNum = parseInt(dayNum, 10) + 1;
+    const fileSlug = day.id.match(/\/([^/]+)\.md$/)?.[1] || '';
+    const displayNum = (day.data.dayNumber ?? 0) + 1;
     return {
       "@type": "ExercisePlan",
       name: day.data.title || `Day ${displayNum}`,
-      url: `${siteBase}/workouts/${monthSlug}/day${dayNum}/`,
+      url: `${siteBase}/workouts/${monthSlug}/${fileSlug}/`,
       activityDuration: {
         "@type": "QuantitativeValue",
         minValue: 45,
@@ -159,7 +156,7 @@ const articleSchema = {
         </a>
       ) : <div />}
 
-      <span class="text-sm font-medium text-base-content/40">{monthSlug}</span>
+      <span class="text-sm font-medium text-base-content/40">{monthTitle}</span>
 
       {nextMonth ? (
         <a
@@ -243,23 +240,21 @@ const articleSchema = {
 
         <div class="grid gap-4 sm:grid-cols-2">
           {days.map((day) => {
-            const dayNum = day.id.match(/day(\d+)\.md$/)?.[1] || '0';
-            const displayNum = parseInt(dayNum, 10);
-            const dayTitle = day.data.title || `Day ${displayNum + 1}`;
+            const fileSlug = day.id.match(/\/([^/]+)\.md$/)?.[1] || '';
+            const dayTitle = day.data.title || `Workout`;
+            const description = day.body?.split('\n## ')[0]?.trim() || '';
             return (
               <a
-                href={getUrl(`workouts/${monthSlug}/day${dayNum}`)}
+                href={getUrl(`workouts/${monthSlug}/${fileSlug}`)}
                 class="group block bg-base-100 rounded-xl border border-base-300 overflow-hidden hover:border-primary/50 hover:shadow-md transition-all duration-200"
               >
                 <div class="p-5">
-                  <div class="flex items-center gap-3 mb-3">
-                    <div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shrink-0">
-                      {displayNum}
-                    </div>
-                    <h3 class="font-semibold group-hover:text-primary transition-colors leading-snug" style="font-family: 'Outfit', sans-serif;">
-                      {dayTitle}
-                    </h3>
-                  </div>
+                  <h3 class="font-semibold group-hover:text-primary transition-colors leading-snug mb-2" style="font-family: 'Outfit', sans-serif;">
+                    {dayTitle}
+                  </h3>
+                  {description && (
+                    <p class="text-sm text-base-content/60 leading-snug mb-3 line-clamp-2">{description}</p>
+                  )}
                   <div class="flex flex-wrap gap-2">
                     <span class="badge badge-ghost badge-sm">45–60 min</span>
                     <span class="badge badge-ghost badge-sm">Functional Fitness</span>
