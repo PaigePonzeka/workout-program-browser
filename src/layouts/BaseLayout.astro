@@ -183,6 +183,31 @@ const allSchemas: Record<string, unknown>[] = [
       </div>
     </nav>
 
+    <!-- ─── Resume Workout Banner ─── -->
+    <div id="resume-banner" class="hidden border-b border-primary/20 px-4 lg:px-8 py-2.5" style="background-color: oklch(from var(--color-primary) l c h / 0.08)">
+      <div class="max-w-5xl mx-auto flex items-center justify-between gap-4">
+        <div class="flex items-center gap-2 min-w-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0 text-primary" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+          </svg>
+          <span class="text-sm font-medium truncate">
+            Saved: <a id="resume-workout-link" href="#" class="text-primary hover:underline"><span id="resume-workout-label"></span></a>
+          </span>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <a id="resume-workout-btn" href="#" class="btn btn-primary btn-xs gap-1">
+            Resume
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <button id="resume-banner-dismiss" class="btn btn-ghost btn-xs btn-circle text-base-content/40 hover:text-base-content" aria-label="Dismiss saved workout">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- ─── Breadcrumbs ─── -->
     {breadcrumbs && breadcrumbs.length > 0 && (
       <div class="bg-base-200/50 border-b border-base-300">
@@ -227,7 +252,7 @@ const allSchemas: Record<string, unknown>[] = [
       </div>
     </footer>
 
-    <!-- Theme toggle script -->
+    <!-- Theme toggle + resume workout banner script -->
     <script is:inline>
       const toggle = document.getElementById('theme-toggle');
       const html = document.documentElement;
@@ -241,6 +266,27 @@ const allSchemas: Record<string, unknown>[] = [
         html.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
       });
+
+      // Resume workout banner
+      (function () {
+        var banner = document.getElementById('resume-banner');
+        var label = document.getElementById('resume-workout-label');
+        var link = document.getElementById('resume-workout-link');
+        var btn = document.getElementById('resume-workout-btn');
+        var dismiss = document.getElementById('resume-banner-dismiss');
+        var saved = null;
+        try { saved = JSON.parse(localStorage.getItem('forged_active_workout') || 'null'); } catch(e) {}
+        if (saved && saved.url && window.location.pathname !== saved.url) {
+          label.textContent = saved.title + ' — Day ' + saved.day;
+          link.href = saved.url;
+          btn.href = saved.url;
+          banner.classList.remove('hidden');
+        }
+        dismiss && dismiss.addEventListener('click', function () {
+          localStorage.removeItem('forged_active_workout');
+          banner.classList.add('hidden');
+        });
+      })();
     </script>
   </body>
 </html>
