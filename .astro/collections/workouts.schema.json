@@ -10,6 +10,15 @@
         "monthSlug": {
           "type": "string"
         },
+        "startDate": {
+          "type": "string"
+        },
+        "featured": {
+          "type": "boolean"
+        },
+        "dayNumber": {
+          "type": "number"
+        },
         "$schema": {
           "type": "string"
         }

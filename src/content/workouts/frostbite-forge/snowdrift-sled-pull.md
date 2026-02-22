@@ -1,0 +1,50 @@
+---
+title: "Snowdrift Sled Pull"
+dayNumber: 1
+---
+This back-and-biceps blast stays chilly with horizontal pulls and grip work, sculpting a strong sled-dog physique to build upper-body muscle and fuel metabolic conditioning.
+  ## Warm-Up
+
+5 min easy row (focus on pulling with the lats)
+2 rounds:
+- 10 banded face pulls
+- 8 prone Y raises
+- 10 jump rope
+
+## Strength or Skill
+
+Bent-Over Barbell Row:
+- 4x8 @ RPE 7
+Lat Pulldown:
+- 3x10 (moderate, strict)
+DB Hammer Curl:
+- 2x12
+
+## Metcon
+
+15 min EMOM:
+- Minute 1: 12 KB swings (53/35 lbs)
+- Minute 2: 8-12 inverted barbell rows (set bar at hip height in rack)
+- Minute 3: 45 sec bike/stairmaster fast pace
+Scaling: Reduce KB weight/raise bar height for easier inverted rows
+
+## Cool-Down
+
+- Hanging lat stretch on bar: 30 sec x 2
+- Cross-body rear delt stretch: 45 sec/side
+- Standing biceps wall stretch: 45 sec/side
+- Wrist and finger stretch (palm up, press fingers down gently): 30 sec/side
+- Child's pose: 1 min
+
+## Core / Optional Finisher
+
+EMOM 4min:
+- 10 v-ups or 16 Russian twists
+
+## Coaching Notes
+Control each row rep—think 'sled tracks in the snow.' Grip will fatigue, so chalk up. Feb-March is prime time to build a stronger back!
+### Week-over-Week Progression
+- Week 1: 4x8 row @ RPE 7; 15min EMOM
+- Week 2: 4x8 row (add 5-10 lbs); 16min EMOM (add 2 reps inverted row)
+- Week 3: 5x6 row @ RPE 8; 15min EMOM (increase KB)
+- Week 4: 3x10 row (light, RPE 6-7); 12min EMOM (reduce reps, strict form)

@@ -1,6 +1,8 @@
 ---
 title: "Blizzard Legs Bonanza"
----Leg-dedicated day to freeze-fat in your quads, glutes, and hamstrings and keep your lower body strong for adventure—all with glacial focus and intention.
+dayNumber: 2
+---
+Leg-dedicated day to freeze-fat in your quads, glutes, and hamstrings and keep your lower body strong for adventure—all with glacial focus and intention.
   ## Warm-Up
 
 400m incline treadmill walk or 5 min bike
@@ -32,9 +34,11 @@ Scaling: Air squats for wall balls; lower box; lighter KB
 
 ## Cool-Down
 
-- Standing hamstring stretch: 60 sec/side
-- Seated figure-4 stretch: 1 min/side
-- Couch stretch: 60 sec/side
+- Couch stretch (hip flexors/quads): 90 sec/side
+- Standing hamstring forward fold: 60 sec
+- Seated figure-4 glute stretch: 60 sec/side
+- Standing calf stretch against wall: 30 sec/side
+- Supine spinal twist: 45 sec/side
 
 ## Core / Optional Finisher
 
@@ -44,11 +48,10 @@ Scaling: Air squats for wall balls; lower box; lighter KB
 
 ## Coaching Notes
 
-Push speed on wall balls, but don’t lose squat depth. Adjust loads/boxes for form. Reserve the RDLs for quality!
+Push speed on wall balls, but don't lose squat depth. Adjust loads/boxes for form. Reserve the RDLs for quality!
 
 ### Week-over-Week Progression
 - Week 1: 5x5 squat, as written
 - Week 2: Add 5-10 lbs, or +1 rep per set, metcon drops to 3 rounds (increase weight)
 - Week 3: Hold load, but try for deeper ROM; swap RDL for single-leg RDLs
 - Week 4: 4x5 squats @ deload (80% of week 2/3), 10-min AMRAP (reduce reps/set)
-  

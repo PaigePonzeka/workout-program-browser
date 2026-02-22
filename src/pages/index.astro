@@ -9,12 +9,12 @@ import { getUrl } from "../utils/url";
 // Get all workout programs
 const allWorkouts = await getCollection("workouts");
 
-// Filter out any entries without monthSlug and sort by monthSlug in descending order (newest first)
+// Filter out any entries without monthSlug and sort by startDate in descending order (newest first)
 const months = allWorkouts
   .filter(entry => entry.data.monthSlug) // Only include entries with monthSlug
-  .sort((a, b) => (b.data.monthSlug || "").localeCompare(a.data.monthSlug || ""));
+  .sort((a, b) => (b.data.startDate || "").localeCompare(a.data.startDate || ""));
 
-const featured = months[0]; // First item is the most recent
+const featured = months.find(m => m.data.featured) || months[0];
 
 const siteBase = Astro.site
   ? new URL(import.meta.env.BASE_URL || "/", Astro.site).href.replace(/\/$/, "")
@@ -190,8 +190,8 @@ const faqSchema = {
     {/* Grid of month cards */}
     <div class="grid gap-4 sm:grid-cols-2">
       {months.map((month, index) => {
-        // Parse the month slug to get a display name (e.g., "2026-02" -> "February 2026")
-        const date = month.data.monthSlug ? new Date(`${month.data.monthSlug}-01`) : new Date();
+        // Parse startDate to get a display date (e.g., "2026-02-19" -> "February 2026")
+        const date = month.data.startDate ? new Date(`${month.data.startDate}T00:00:00`) : new Date();
         const monthName = date.toLocaleString('default', { month: 'long' });
         const year = date.getFullYear();
         const displayDate = `${monthName} ${year}`;

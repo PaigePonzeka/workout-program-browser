@@ -1,6 +1,8 @@
 ---
 title: "Glacial Gains"
----Turn up the heat in your legs with frozen-solid focus: squats, hinges, and unilateral strength, forging resilience for winter terrain.
+dayNumber: 2
+---
+Turn up the heat in your legs with frozen-solid focus: squats, hinges, and unilateral strength, forging resilience for winter terrain.
   ## Warm-Up
 
 5 min light bike or step-up
@@ -29,9 +31,11 @@ Scaling: Use lighter KB, lower box, do bodyweight lunges
 
 ## Cool-Down
 
+- Couch stretch (quads/hip flexors): 90 sec/side
 - Seated hamstring stretch: 60 sec/side
-- Quad stretch: 45 sec/side
-- Figure 4 glute: 45 sec/side
+- Supine figure-4 glute stretch: 60 sec/side
+- Standing calf stretch on step: 30 sec/side
+- Supine spinal twist: 45 sec/side
 
 ## Core / Optional Finisher
 
@@ -44,4 +48,3 @@ Keep squat depth consistent—no 'snowdrifts' (shallow reps)! Control step-ups, 
 - Week 2: 4x8 squats (add 5-10 lbs); 16min chipper (add 5 reps/each)
 - Week 3: 4x7 squats @ RPE 8; 18min chipper (heavier KB)
 - Week 4: 3x8 squats (light, RPE 6-7); 14min chipper
-  

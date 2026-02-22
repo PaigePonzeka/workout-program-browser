@@ -8,8 +8,8 @@
 ## Current Status
 
 **Active Phase**: Phase 1 — Site Structure & Templates
-**Last Updated**: 2026-02-09
-**Build Status**: ✅ Passing (10 pages generated)
+**Last Updated**: 2026-02-21
+**Build Status**: ✅ Passing (20 pages generated)
 
 ---
 
@@ -114,6 +114,32 @@
 ---
 
 ## Changelog
+
+### 2026-02-21 — Replace Pull-Ups with Beginner-Friendly Alternatives
+
+- Replaced pull-up exercises in 3 workout files with beginner-accessible movements (DB rows, lat pull-downs, inverted barbell rows)
+- `glacial-grip-and-rip.md`: scap pull-ups → band pull-aparts (warm-up); weighted pull-ups → single-arm DB rows (strength); pull-ups → banded lat pull-downs (metcon); updated coaching notes and week progressions
+- `snow-plow-pulls.md`: weighted pull-ups → lat pull-down close grip (strength); updated coaching notes
+- `snowdrift-sled-pull.md`: pull-ups EMOM → inverted barbell rows; updated scaling, coaching notes, and week progression
+- Updated n8n AI prompt: pull-ups removed from Strength examples, added `### Gymnastics & Accessibility Rule` section prohibiting gymnastics movements as primary exercises and specifying beginner-friendly pulling alternatives
+- Build verified: 20 pages, 0 errors; only remaining "pull-up" reference is the cool-down lat stretch (appropriate)
+
+### 2026-02-21 — Name-Based URL Slugs (Programs + Days)
+
+- Migrated 3 program folders from date-based names (`2026-02`, `2026-02-18`, `2026-02-19`) to program-name slugs (`frostbite-fat-loss-fiesta`, `frostbite-furnace`, `frostbite-forge`)
+- Renamed 15 day files from `day0.md`/`day1.md` etc. to workout-name slugs (e.g., `polar-press-party.md`)
+- Added `startDate`, `featured`, and `dayNumber` fields to Zod schema (`src/content.config.ts`)
+- Updated all frontmatter: `monthSlug` now matches folder name (not a date), added `startDate`, set `featured: true` only on `frostbite-forge`
+- Fixed formatting bug in day files (added newline after closing `---`)
+- Removed stale `slug: "undefined"` field from `frostbite-forge/polar-press-party.md`
+- Updated `index.astro`: sorts by `startDate`, detects featured via `featured` flag
+- Updated `[month]/index.astro`: day filtering by `dayNumber` frontmatter, name-based day URLs, `datePublished` from `startDate`
+- Updated `[month]/[day].astro`: `getStaticPaths` uses file slugs, all nav URLs are name-based
+- Updated `MonthCard.astro`: switched to `getUrl()` helper
+- Updated `CLAUDE.md`: naming conventions now reflect name-based slug system
+- Updated `reference/n8n-workflow/Forged - Workout Generator.json`: added `programming.slug` and `workout.slug` to AI prompt, updated JS code (slugify + `dayNumber`), added `List Existing Programs` and `Resolve Unique Slug` nodes for collision detection, updated GitHub file paths to use slugs
+- **Decision**: Programs sorted by `startDate` (newest first) instead of `monthSlug` string compare
+- **Decision**: Day ordering driven by `dayNumber` frontmatter field (0-indexed), not filename pattern
 
 ### 2026-02-09 — Initial Build (Phase 1 Complete)
 

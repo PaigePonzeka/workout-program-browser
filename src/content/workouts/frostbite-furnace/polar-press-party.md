@@ -1,6 +1,8 @@
 ---
 title: "Polar Press Party"
----A push-focused workout to boost pressing strength and power, warming up your upper body for February’s frosty challenges.
+dayNumber: 0
+---
+A push-focused workout to boost pressing strength and power, warming up your upper body for February's frosty challenges.
   ## Warm-Up
 5 min bike or rower
 Then 2 rounds:
@@ -25,9 +27,11 @@ Incline Push-Ups
 Scaling: Use lighter dumbbells or step-ups for box jumps
 
 ## Cool-Down
-- Chest doorway stretch: 1 min each side
-- Overhead triceps stretch: 1 min each arm
-- Cobra pose: 1 min
+- Doorway chest stretch: 60 sec/side
+- Overhead triceps stretch: 45 sec/side
+- Cross-body shoulder stretch: 45 sec/side
+- Cobra pose: 45 sec
+- Child's pose: 1 min
 
 ## Core / Optional Finisher
 3 sets:
@@ -41,4 +45,3 @@ Keep elbows at 45 degrees on pressing. Use full foot for box jumps. Stay explosi
 - Week 2: 4x8 bench @ RPE 7.5, 14 min AMRAP
 - Week 3: 5x6 bench @ RPE 8, 12 min AMRAP (increase DBs)
 - Week 4: 4x8 bench @ RPE 6 (deload), 10 min AMRAP
-  

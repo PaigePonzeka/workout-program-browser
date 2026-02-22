@@ -1,6 +1,8 @@
 ---
 title: "Icy Quads Quest"
----This lower body day builds powerful legs even in the deepest February freeze, combining squats with posterior chain action for strength and definition.
+dayNumber: 2
+---
+This lower body day builds powerful legs even in the deepest February freeze, combining squats with posterior chain action for strength and definition.
   ## Warm-Up
 5 min brisk walk or jog
 Then 2 rounds:
@@ -25,9 +27,11 @@ Banded Lateral Walks
 Scaling: Use lighter weights or reduce reps as needed
 
 ## Cool-Down
-- Standing quad stretch: 1 min/side
-- Prone hamstring stretch: 45 sec/side
-- Pigeon pose: 1 min/side
+- Couch stretch (quads/hip flexors): 90 sec/side
+- Pigeon pose (glutes): 60 sec/side
+- Standing hamstring forward fold: 60 sec
+- Standing calf stretch against wall: 30 sec/side
+- Supine figure-4 glute stretch: 45 sec/side
 
 ## Core / Optional Finisher
 3 sets:
@@ -41,4 +45,3 @@ Emphasize full squat depth and proper hip hinge. Adjust KB weight for safe, powe
 - Week 2: 4x8 squat @ RPE 7.5, chipper @ 16 min cap (add 5 reps per movement)
 - Week 3: 5x6 squat @ RPE 8, chipper @ 15 min with heavier load
 - Week 4: 4x8 squat @ RPE 6, chipper @ 13 min cap
-  

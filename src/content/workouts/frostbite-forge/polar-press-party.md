@@ -1,7 +1,8 @@
 ---
 title: "Polar Press Party"
-slug: "undefined"
----A push-focused session to ignite upper body heat with classic presses and icy burnouts, perfect for building strength and supporting the winter warrior theme.
+dayNumber: 0
+---
+A push-focused session to ignite upper body heat with classic presses and icy burnouts, perfect for building strength and supporting the winter warrior theme.
   ## Warm-Up
 
 5 min brisk treadmill walk or ski erg
@@ -28,9 +29,11 @@ Scaling: Push-ups to knees; DBs to 15/10 lbs; Row/bike to 12/8 cal
 
 ## Cool-Down
 
-- Doorway pec stretch: 45 sec/side
-- Triceps overhead stretch: 30 sec/side
-- Minimum 1 minute deep breathing
+- Doorway pec stretch: 60 sec/side
+- Overhead triceps stretch: 45 sec/side
+- Cross-body shoulder stretch: 45 sec/side
+- Prone shoulder opener (arm extended palm-down, rotate torso away): 45 sec/side
+- Child's pose: 1 min
 
 ## Core / Optional Finisher
 
@@ -43,4 +46,3 @@ Maintain solid form on all pressing and strict tempo. Don't rush the strength se
 - Week 2: 4x8 bench @ RPE 7.5 (add 5-10 lbs); 15min AMRAP (add 2 push-ups/rd)
 - Week 3: 4x7 bench @ RPE 8 (increase load); 16min AMRAP (add 2 DBs/rd)
 - Week 4: 3x8 bench @ RPE 6 (deload); 12min AMRAP (reduce load)
-  
