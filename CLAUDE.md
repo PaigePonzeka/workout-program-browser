@@ -14,13 +14,14 @@
 
 ## 🏗️ Project Overview
 
-**FORGED** is a static website for browsing AI-generated monthly workout programs. Workouts are stored as Markdown files in `src/content/workouts/`, organized by month and day.
+**FORGED** is an end-to-end system for generating and browsing AI-created monthly workout programs. An n8n automation pipeline uses AI to generate CrossFit-style programs as structured JSON, converts them to Markdown, and commits them to GitHub. Cloudflare Pages auto-deploys on push, and users browse workouts on their phone at the gym.
 
 - **Framework**: Astro 5 (static output, Content Collections, file-based routing)
 - **Styling**: Tailwind CSS v4 + DaisyUI v5 (custom "gym" and "gymdark" themes)
 - **Typography**: Outfit (headings) + DM Sans (body) via Google Fonts
 - **Content**: Markdown with YAML frontmatter, validated by Zod schema
-- **Hosting target**: Cloudflare Pages (free tier)
+- **Hosting**: Cloudflare Pages (auto-deploys on git push)
+- **AI Pipeline**: n8n workflow using GPT-4.1 to generate programs monthly
 
 ## 📁 Project Structure
 
@@ -30,6 +31,10 @@ workout-program-browser/
 ├── docs/
 │   ├── IMPLEMENTATION-PLAN.md ← Full project spec (read first)
 │   └── progress.md            ← Status tracking (update after every task)
+├── reference/
+│   ├── prompt.md              ← AI prompt reference/notes
+│   └── n8n-workflow/
+│       └── Forged - Workout Generator.json ← n8n pipeline definition
 ├── src/
 │   ├── content.config.ts      ← Content Collection schema
 │   ├── styles/global.css      ← Tailwind + DaisyUI themes + fonts
@@ -110,6 +115,20 @@ npm run preview      # Preview production build locally
 4. **Theme toggle** uses `data-theme` attribute on `<html>`, stored in `localStorage`. Both `gym` (light) and `gymdark` (dark) must be defined in global.css.
 5. **The `featured` flag** on month index files controls which program shows as "Latest" on the homepage and powers the hero CTA. Only one month should have `featured: true` at a time.
 
+## 🤖 AI Content Pipeline (n8n)
+
+The n8n workflow at `reference/n8n-workflow/Forged - Workout Generator.json` automates monthly program generation:
+
+1. **Schedule Trigger** — Fires monthly
+2. **GPT-4.1 API Call** — Sends a detailed system prompt requesting a CrossFit-style, 4-week, 4-5 day/week program as structured JSON. Includes themed naming, scaling options, week-over-week progression, equipment constraints, and accessibility rules (no gymnastics movements as primary exercises)
+3. **Parse Response** — Extracts JSON from API output
+4. **Convert to Markdown** — Transforms JSON into `index.md` (program overview) + individual day `.md` files with proper frontmatter and slug-based filenames
+5. **Slug Collision Check** — Lists existing program folders on GitHub, appends `-2`, `-3` etc. if slug already exists
+6. **Commit to GitHub** — Creates files via GitHub API (index.md first, then each day file)
+7. **Trigger Mailer** — Calls a separate "Forged - Mailer" n8n workflow to send email notification
+
+Once committed, Cloudflare Pages auto-builds and the new program appears on the site.
+
 ## 🚀 Implementation Phases
 
 See `docs/IMPLEMENTATION-PLAN.md` for full details. Summary:
@@ -118,6 +137,6 @@ See `docs/IMPLEMENTATION-PLAN.md` for full details. Summary:
 |-------|--------|-------------|
 | **Phase 1** | ✅ Complete | Site structure, 3 templates, components, theme, sample content |
 | **Phase 2** | 🔲 Not started | Deploy to Cloudflare Pages, custom domain |
-| **Phase 3** | 🔲 Not started | n8n + AI pipeline: auto-generate workouts → commit to GitHub → email alert |
+| **Phase 3** | ✅ Complete | n8n + AI pipeline: auto-generate workouts → commit to GitHub → email alert |
 
 Check `docs/progress.md` for granular task-level status.
