@@ -1,5 +1,5 @@
 {
-  "name": "Forged - Workout Generator",
+  "name": "Forged - Workout Generator v2",
   "nodes": [
     {
       "parameters": {
@@ -30,10 +30,10 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2.1,
       "position": [
-        208,
+        0,
         0
       ],
-      "id": "5329862e-1d49-46ee-8a4f-3113ed5ee5d4",
+      "id": "c1f8ac39-33de-40a3-ada3-d2b5d1ce2a40",
       "name": "Message a model",
       "credentials": {
         "openAiApi": {
@@ -49,10 +49,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        816,
+        608,
         16
       ],
-      "id": "6e003ad6-cc99-4d70-a756-68ddc1071bd2",
+      "id": "8390a789-41ec-437c-9971-7903b07044b3",
       "name": "Code in JavaScript",
       "notesInFlow": true,
       "notes": "Get the JSON from the API Response"
@@ -64,17 +64,16 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1024,
+        816,
         16
       ],
-      "id": "b7492d9e-a013-44b2-836e-1153f5f0a2b3",
+      "id": "d331e382-a7dd-40b0-b418-03072bf03192",
       "name": "Code in JavaScript1",
       "notesInFlow": true,
       "notes": "Convert JSON to Markdown. Index file uses program slug, each day uses workout slug. Days array contains objects with slug and content fields."
     },
     {
       "parameters": {
-        "method": "GET",
         "url": "https://api.github.com/repos/PaigePonzeka/workout-program-browser/contents/src/content/workouts",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "githubOAuth2Api",
@@ -83,31 +82,31 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1232,
+        1024,
         16
       ],
-      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "id": "27a9a4ae-ffa2-4c44-931a-b45029e01e6c",
       "name": "List Existing Programs",
+      "notesInFlow": true,
       "credentials": {
         "githubOAuth2Api": {
           "id": "WmNiNJVssePaSyjF",
           "name": "GitHub account 8"
         }
       },
-      "notesInFlow": true,
       "notes": "Fetch existing folder names from GitHub to check for slug collisions"
     },
     {
       "parameters": {
-        "jsCode": "const existingFolders = $('List Existing Programs').first().json\n  .map(item => item.name);\n\nconst baseSlug = $('Code in JavaScript1').first().json.id;\nconst data = $('Code in JavaScript1').first().json;\n\nlet slug = baseSlug;\nlet suffix = 2;\nwhile (existingFolders.includes(slug)) {\n  slug = `${baseSlug}-${suffix}`;\n  suffix++;\n}\n\n// Pass through all data with the resolved slug\nreturn {\n  ...data,\n  id: slug\n};"
+        "jsCode": "const existingFolders = $('List Existing Programs').all().map(item => item.json.name)\n\nconst baseSlug = $('Code in JavaScript1').first().json.id;\nconst data = $('Code in JavaScript1').first().json;\n\nlet slug = baseSlug;\nlet suffix = 2;\nwhile (existingFolders.includes(slug)) {\n  slug = `${baseSlug}-${suffix}`;\n  suffix++;\n}\n\n// Pass through all data with the resolved slug\nreturn {\n  ...data,\n  id: slug\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1440,
+        1232,
         16
       ],
-      "id": "f1e2d3c4-b5a6-7890-cdef-ab1234567890",
+      "id": "68c96c63-9651-4c20-aaf2-0f75cbc02d0b",
       "name": "Resolve Unique Slug",
       "notesInFlow": true,
       "notes": "Ensure program slug is unique by appending -2, -3, etc. if a collision exists"
@@ -137,10 +136,10 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
       "position": [
-        1984,
+        1776,
         528
       ],
-      "id": "3759634b-9f75-497a-a2be-82983a3fc51a",
+      "id": "3e2d2002-738f-48a7-b2ce-6f209f28ab85",
       "name": "Create a file",
       "webhookId": "8ed0875e-66ab-4035-9256-9460add8bb1f",
       "credentials": {
@@ -156,12 +155,12 @@
         "fieldToSplitOut": "days",
         "options": {}
       },
-      "id": "0a5975b5-2e27-43d7-b8f9-c3d2487365c1",
+      "id": "f0388bfa-8f84-4a73-89ea-356f66a2157c",
       "name": "Split Out Days Array",
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        1968,
+        1760,
         304
       ]
     },
@@ -172,13 +171,13 @@
             {
               "id": "id-1",
               "name": "dayContent",
-              "value": "={{ $json.days.content }}",
+              "value": "={{$json.content}}",
               "type": "string"
             },
             {
               "id": "id-2",
               "name": "daySlug",
-              "value": "={{ $json.days.slug }}",
+              "value": "={{$json.slug}}",
               "type": "string"
             },
             {
@@ -191,12 +190,12 @@
         },
         "options": {}
       },
-      "id": "d9b86752-b1c6-4fe5-852a-30fea289bc7c",
+      "id": "bd9df79a-7bcb-43d8-a9d2-a54c65f3b711",
       "name": "Prepare Day File Data",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2192,
+        1984,
         304
       ]
     },
@@ -222,12 +221,12 @@
         "fileContent": "={{ $json.dayContent }}",
         "commitMessage": "=Adding {{ $json.daySlug }} for program {{ $json.programId }}"
       },
-      "id": "2a6ac9ae-48bb-4b37-b690-0b86062df45b",
+      "id": "cc65af95-718e-4c18-ad25-8979e3e812f0",
       "name": "Create Day File",
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
       "position": [
-        2416,
+        2208,
         304
       ],
       "webhookId": "e173e4d0-cb61-4f24-acee-741b2862bd18",
@@ -251,10 +250,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        -128,
+        -336,
         144
       ],
-      "id": "391a1c9f-2b58-47d9-9c2e-08e77f8f1f36",
+      "id": "0455e148-3452-4934-8ea4-a1f7f27078eb",
       "name": "Schedule Trigger"
     },
     {
@@ -279,10 +278,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        2624,
+        2416,
         304
       ],
-      "id": "1df6721d-3a38-462c-8c1a-e474448008de",
+      "id": "a0da2a19-be75-466a-950c-bba9275bcdc0",
       "name": "Call 'Forged - Mailer'"
     }
   ],
@@ -348,11 +347,6 @@
         ]
       ]
     },
-    "Create a file": {
-      "main": [
-        []
-      ]
-    },
     "Split Out Days Array": {
       "main": [
         [
@@ -404,11 +398,10 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "ed04687f-14aa-469f-87f7-2184a5cae753",
+  "versionId": "5b35a1b7-e5ce-416b-91ef-ae4e37cdd73f",
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "eea14826bab32b5ebdcb784b0f31b6ed77e000103b7e54a7113e569c7f9815ae"
   },
-  "id": "lwRwBjAP6rp5Bqg2i_Uzs",
+  "id": "EU6SdozzD8PpVPHTPlQ4I",
   "tags": []
 }
