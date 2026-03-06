@@ -1,0 +1,63 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { getUrl } from "@/utils/url";
+
+const allTestWorkouts = await getCollection("test-workouts");
+
+const testPrograms = allTestWorkouts
+  .filter(entry => entry.data.monthSlug)
+  .sort((a, b) => (b.data.startDate || "").localeCompare(a.data.startDate || ""));
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Test Programs" },
+];
+---
+
+<BaseLayout title="Test Programs" breadcrumbs={breadcrumbs}>
+  <section class="max-w-5xl mx-auto px-4 lg:px-8 py-12">
+    <h1 class="text-2xl sm:text-3xl font-bold tracking-tight mb-2" style="font-family: 'Outfit', sans-serif;">
+      Test Programs
+    </h1>
+    <p class="text-sm text-base-content/50 mb-8">
+      These are test-generated programs not shown on the main site.
+    </p>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      {testPrograms.map((month) => {
+        const date = month.data.startDate ? new Date(`${month.data.startDate}T00:00:00`) : new Date();
+        const monthName = date.toLocaleString('default', { month: 'long' });
+        const year = date.getFullYear();
+        const displayDate = `${monthName} ${year}`;
+        const title = month.data.title || displayDate;
+
+        return (
+          <a href={getUrl(`test/${month.data.monthSlug}`)} class="group block">
+            <div class="card bg-base-200 border border-base-300 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
+              <div class="card-body p-5 sm:p-6">
+                <div class="flex items-start justify-between gap-3">
+                  <h3 class="card-title text-lg sm:text-xl font-bold group-hover:text-primary transition-colors leading-tight" style="font-family: 'Outfit', sans-serif;">
+                    {title}
+                  </h3>
+                  <span class="badge badge-warning badge-sm badge-outline shrink-0">Test</span>
+                </div>
+                <div class="flex justify-end mt-2">
+                  <span class="text-primary/0 group-hover:text-primary transition-all duration-300 translate-x-0 group-hover:translate-x-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+
+    {testPrograms.length === 0 && (
+      <div class="text-center py-16">
+        <p class="text-base-content/40 text-lg">No test programs found.</p>
+      </div>
+    )}
+  </section>
+</BaseLayout>
