@@ -8,7 +8,7 @@
 ## Current Status
 
 **Active Phase**: Phase 1 — Site Structure & Templates
-**Last Updated**: 2026-02-21
+**Last Updated**: 2026-03-06
 **Build Status**: ✅ Passing (20 pages generated)
 
 ---
@@ -114,6 +114,21 @@
 ---
 
 ## Changelog
+
+### 2026-03-06 — Staging Environment for n8n Workflow
+
+- Added `test-workouts` content collection with shared schema (`src/content.config.ts`)
+- Created `src/content/test-workouts/` folder for test-generated programs
+- Built 3 new test route pages under `src/pages/test/`: listing, month overview, and day detail
+- Test programs are completely isolated from production — hidden from homepage, accessible at `/test/`
+- Updated n8n workflow (`reference/n8n-workflow/Forged - Workout Generator.json`):
+  - Added Manual Trigger with staging/production mode dropdown
+  - Added Set Mode node to determine content path (`src/content/workouts` vs `src/content/test-workouts`)
+  - Updated all GitHub commit nodes to use dynamic content path
+  - Added "Should Send Email?" IF node to skip mailer in staging mode
+  - Code in JavaScript1 now conditionally sets `featured: true` only in production mode
+- **Decision**: Separate content folder approach over branch-based or flag-based staging — cleanest isolation with zero impact on production pages
+- Build verified: 35+ pages, 0 errors
 
 ### 2026-02-21 — Replace Pull-Ups with Beginner-Friendly Alternatives
 
