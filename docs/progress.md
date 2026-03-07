@@ -9,6 +9,7 @@
 
 **Active Phase**: Phase 1 — Site Structure & Templates
 **Last Updated**: 2026-03-06
+**Pipeline Status**: Exercise diversity + seasonal theming pipeline added
 **Build Status**: ✅ Passing (20 pages generated)
 
 ---
@@ -114,6 +115,24 @@
 ---
 
 ## Changelog
+
+### 2026-03-06 — Exercise Diversity & Seasonal Theming Pipeline
+
+- Added 5 new n8n workflow nodes to pre-process inputs before the main GPT-4.1 workout generation call:
+  - **Generate Theme** (GPT-4.1-mini): Picks a holiday/seasonal theme for the current month (e.g., "March Madness", "Summer Solstice")
+  - **Fetch Exercise Catalogue** (HTTP Request): Fetches 800+ exercises from free-exercise-db (public domain JSON)
+  - **Filter Exercises** (Code): Filters catalogue by available equipment (barbell, dumbbell, bodyweight, kettlebells, bands)
+  - **Select Exercises** (GPT-4.1-mini): AI curates specific strength lifts for push/pull/leg days from the catalogue
+  - **Prepare Prompt Context** (Code): Extracts theme and exercise selections into clean JSON for the main prompt
+- Modified main GPT-4.1 prompt:
+  - Replaced generic theme guidance with injected seasonal theme as a Hard Rule
+  - Added "Prescribed Exercises" section — primary strength lifts are now mandated per day type
+  - Strengthened Gymnastics & Accessibility Rule — no more "rotate between" soft language
+- Workflow flow: `Set Mode → Generate Theme + Fetch Catalogue (parallel) → Filter → Select → Prepare Context → Message a model`
+- Updated `reference/prompt.md` to document the full pipeline, exercise pools, and theme injection mechanism
+- **Decision**: Used free-exercise-db static JSON over wger.de API (simpler single HTTP call, all data included with names)
+- **Decision**: GPT-4.1-mini for theme and exercise selection (cheap, fast, sufficient for simple curation tasks)
+- **Decision**: Strength lifts only for AI prescription; conditioning/metcon movements stay in main prompt's creative control
 
 ### 2026-03-06 — Staging Environment for n8n Workflow
 
