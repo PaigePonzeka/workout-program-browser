@@ -33,8 +33,7 @@ workout-program-browser/
 │   └── progress.md            ← Status tracking (update after every task)
 ├── reference/
 │   ├── prompt.md              ← AI prompt reference/notes
-│   └── n8n-workflow/
-│       └── Forged - Workout Generator.json ← n8n pipeline definition
+│   └── n8n-workflow/          ← GITIGNORED (n8n workflow kept locally only)
 ├── src/
 │   ├── content.config.ts      ← Content Collection schema
 │   ├── styles/global.css      ← Tailwind + DaisyUI themes + fonts
@@ -117,7 +116,7 @@ npm run preview      # Preview production build locally
 
 ## 🤖 AI Content Pipeline (n8n)
 
-The n8n workflow at `reference/n8n-workflow/Forged - Workout Generator.json` automates monthly program generation. The full prompt reference is at `reference/prompt.md`.
+The n8n workflow (kept locally at `reference/n8n-workflow/`, gitignored for security) automates monthly program generation. The full prompt reference is at `reference/prompt.md`.
 
 ### Pre-Processing Pipeline (Exercise Diversity & Theming)
 
