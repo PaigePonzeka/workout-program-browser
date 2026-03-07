@@ -117,17 +117,39 @@ npm run preview      # Preview production build locally
 
 ## 🤖 AI Content Pipeline (n8n)
 
-The n8n workflow at `reference/n8n-workflow/Forged - Workout Generator.json` automates monthly program generation:
+The n8n workflow at `reference/n8n-workflow/Forged - Workout Generator.json` automates monthly program generation. The full prompt reference is at `reference/prompt.md`.
 
-1. **Schedule Trigger** — Fires monthly
-2. **GPT-4.1 API Call** — Sends a detailed system prompt requesting a CrossFit-style, 4-week, 4-5 day/week program as structured JSON. Includes themed naming, scaling options, week-over-week progression, equipment constraints, and accessibility rules (no gymnastics movements as primary exercises)
-3. **Parse Response** — Extracts JSON from API output
-4. **Convert to Markdown** — Transforms JSON into `index.md` (program overview) + individual day `.md` files with proper frontmatter and slug-based filenames
-5. **Slug Collision Check** — Lists existing program folders on GitHub, appends `-2`, `-3` etc. if slug already exists
-6. **Commit to GitHub** — Creates files via GitHub API (index.md first, then each day file)
-7. **Trigger Mailer** — Calls a separate "Forged - Mailer" n8n workflow to send email notification
+### Pre-Processing Pipeline (Exercise Diversity & Theming)
+
+Before the main workout generation call, 5 nodes run sequentially to prepare dynamic inputs:
+
+```text
+Set Mode → Generate Theme → Fetch Exercise Catalogue → Filter Exercises → Select Exercises → Prepare Prompt Context → Message a model → ...
+```
+
+1. **Set Mode** — Manual trigger with staging/production mode dropdown. Determines content path (`src/content/workouts` vs `src/content/test-workouts`)
+2. **Generate Theme** (GPT-4.1-mini) — Picks a holiday/seasonal theme for the current month (e.g., "March Madness", "Spring Awakening"). Returns `{ "theme": "...", "description": "..." }`
+3. **Fetch Exercise Catalogue** (HTTP Request) — Fetches 800+ exercises as JSON from [free-exercise-db](https://github.com/yuhonas/free-exercise-db) (public domain). n8n splits the JSON array into separate items automatically
+4. **Filter Exercises** (Code) — Reconstructs the array via `$input.all().map()`, filters by available equipment (barbell, dumbbell, body only, kettlebells, bands), groups by muscle/force type
+5. **Select Exercises** (GPT-4.1-mini) — AI selects specific strength lifts for push/pull/leg days from the filtered catalogue. Returns `{ push_day: { primary, secondary }, pull_day: { vertical, horizontal }, leg_day: { squat, hinge, accessory } }`
+6. **Prepare Prompt Context** (Code) — Extracts theme and exercise selections from upstream AI node outputs into clean JSON. Handles both string and pre-parsed object responses from OpenAI
+
+### Main Generation & Deployment
+
+1. **Message a model** (GPT-4.1) — Main workout generation. Receives the injected theme (Hard Rule) and prescribed exercises. Generates a 4-week, 4-5 day/week CrossFit-style program as structured JSON
+2. **Parse Response** — Extracts JSON from API output
+3. **Convert to Markdown** — Transforms JSON into `index.md` (program overview) + individual day `.md` files with proper frontmatter and slug-based filenames. **Note: only Week 1 workouts are used** from the AI response
+4. **Slug Collision Check** — Lists existing program folders on GitHub, appends `-2`, `-3` etc. if slug already exists
+5. **Commit to GitHub** — Creates files via GitHub API (index.md first, then each day file)
+6. **Trigger Mailer** — Calls a separate "Forged - Mailer" n8n workflow to send email notification (skipped in staging mode)
 
 Once committed, Cloudflare Pages auto-builds and the new program appears on the site.
+
+### n8n Pitfalls
+
+- n8n HTTP Request node splits JSON array responses into separate items — use `$input.all().map(item => item.json)` to reconstruct arrays in Code nodes
+- OpenAI `json_object` response format returns `content[0].text` as a pre-parsed object, not a string — `extractJson()` in the Prepare Prompt Context node handles both cases
+- Nodes must be wired sequentially (not parallel branches) to ensure all upstream data is available — parallel branches caused "Node hasn't been executed" errors
 
 ## 🚀 Implementation Phases
 
